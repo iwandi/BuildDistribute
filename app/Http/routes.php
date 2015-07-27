@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('pages/home');
 });
+
+Route::resource('project','ProjectController');
+Route::resource('project.build','BuildController');
