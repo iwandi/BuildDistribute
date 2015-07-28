@@ -27,4 +27,9 @@ class Project extends Model
 
         return $project;
     }
+
+    public function build()
+    {
+        return $this->hasMany('App\Build');
+    }
 }

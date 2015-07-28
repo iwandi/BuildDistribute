@@ -15,8 +15,7 @@ class CreateBuildTable extends Migration
         Schema::create('build', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            //$table->foreign('projectId')->references('id')->on('project')->onDelete('cascade');
-            $table->integer('projectId');
+            $table->integer('project_Id')->unsigned();
             $table->string('installUrl');
             $table->string('version');
             $table->string('platform');
@@ -25,6 +24,8 @@ class CreateBuildTable extends Migration
             $table->string('iPhoneBundleIdentifier');
             $table->string('iPhoneBundleVersion');
             $table->string('iPhoneTitle');
+
+            $table->foreign('project_Id')->references('id')->on('project')->onDelete('cascade');
         });
     }
 

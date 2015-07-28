@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Redirect;
+
 use App\Project;
 
 class ProjectController extends Controller
@@ -54,9 +56,11 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $project = Project::getByIdOrName($id);
+        //$project = Project::getByIdOrName($id);
 
-        return view('project/show', compact('project'));
+        //return view('project/show', compact('project'));
+
+        return Redirect::action('BuildController@index', $id);
     }
 
     /**
@@ -95,11 +99,11 @@ class ProjectController extends Controller
      * @return Response
      */
     public function destroy($id)
-    {
-        /*$project = Project::find($id);
+    {        
+        $project = Project::getByIdOrName($id);
+
         $project->delete();
-        return redirect('project');        
-        */
-        return "destory";
+
+        return redirect('project');
     }
 }

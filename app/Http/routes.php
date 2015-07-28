@@ -17,3 +17,7 @@ Route::get('/', function () {
 
 Route::resource('project','ProjectController');
 Route::resource('project.build','BuildController');
+
+Route::get('project/{projectId}/head', 'BuildController@indexHead');
+Route::get('project/{projectId}/{search}', 'BuildController@indexSearch');
+Route::get('project/{projectId}/{platform}/head', 'BuildController@showPlatformHead');

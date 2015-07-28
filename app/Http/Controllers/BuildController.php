@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Redirect;
+
+use App\Project;
+use App\Build;
+
 class BuildController extends Controller
 {
     /**
@@ -14,9 +19,43 @@ class BuildController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($projectId)
     {
-        return "Hallo World";
+        $project = Project::getByIdOrName($projectId);
+        $buildList = $project->build->all();
+
+        return view('build/index', compact('project','buildList'));
+    }
+
+    public function indexSearch($projectId, $search)
+    {
+        $project = Project::getByIdOrName($projectId);
+        $buildList = Build::ident($project->id , $search)->get();
+
+        return view('build/index', compact('project','buildList'));
+    }
+
+    public function indexHead($projectId)
+    {
+        $project = Project::getByIdOrName($projectId);
+
+        $buildList = Build::whereIn('platform',function($query){
+                $query->from('build')
+                    ->select('platform')
+                    ->groupBy('platform');
+            })->groupBy('platform')->get();
+
+        return view('build/index', compact('project','buildList'));
+    }
+
+    public function showPlatformHead($projectId, $platform)
+    {
+        $project = Project::getByIdOrName($projectId);
+        $build = Build::where('project_id', $project->id)
+                        ->where('platform', $platform)
+                        ->first();
+
+        return view('build/show', compact('project', 'build'));
     }
 
     /**
@@ -24,9 +63,11 @@ class BuildController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($projectId)
     {
-        //
+        $project = Project::getByIdOrName($projectId);
+
+        return view('build/create', compact('project'));
     }
 
     /**
@@ -35,9 +76,13 @@ class BuildController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store($projectId, Requests\BuildRequest $request)
+    {        
+        $project = Project::getByIdOrName($projectId);
+
+        $project->build()->create($request->all());
+
+        return Redirect::action('BuildController@index', $projectId);
     }
 
     /**
@@ -46,9 +91,12 @@ class BuildController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($projectId, $buildId)
     {
-        //
+        $project = Project::getByIdOrName($projectId);
+        $build = $project->build()->find($buildId);
+
+        return view('build/show', compact('project', 'build'));
     }
 
     /**
@@ -57,9 +105,12 @@ class BuildController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($projectId, $buildId)
     {
-        //
+        $project = Project::getByIdOrName($projectId);
+        $build = $project->build()->find($buildId);
+
+        return view('build/edit', compact('project', 'build'));
     }
 
     /**
@@ -69,9 +120,14 @@ class BuildController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update($projectId, Requests\BuildRequest $request, $buildId)
     {
-        //
+        $project = Project::getByIdOrName($projectId);
+        $build = $project->build()->find($buildId);
+
+        $build->update($request->all());
+
+        return Redirect::action('BuildController@index', $projectId);
     }
 
     /**
@@ -80,8 +136,13 @@ class BuildController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($projectId, $buildId)
     {
-        //
+        $project = Project::getByIdOrName($projectId);
+        $build = $project->build()->find($buildId);
+
+        $build->delete();
+
+        return Redirect::action('BuildController@index', $projectId);
     }
 }
