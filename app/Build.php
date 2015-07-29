@@ -22,7 +22,7 @@ class Build extends Model
 
     public function project()
     {
-    	return $this->belongsTo('App\Project');
+    	return $this->belongsTo('App\Project');//, 'project_Id', 'id');
     }
 
     public function scopeIdent($query, $projectId, $search)

@@ -39,9 +39,12 @@ class BuildController extends Controller
     {
         $project = Project::getByIdOrName($projectId);
 
-        $buildList = Build::whereIn('platform',function($query){
+        $buildList = Build::where('project_id', $project->id)
+            ->whereIn('platform', function($query) use ($project)
+            {
                 $query->from('build')
                     ->select('platform')
+                    ->where('project_id', $project->id)
                     ->groupBy('platform');
             })->groupBy('platform')->get();
 

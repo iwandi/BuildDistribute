@@ -21,3 +21,8 @@ Route::resource('project.build','BuildController');
 Route::get('project/{projectId}/head', 'BuildController@indexHead');
 Route::get('project/{projectId}/{search}', 'BuildController@indexSearch');
 Route::get('project/{projectId}/{platform}/head', 'BuildController@showPlatformHead');
+
+Route::group(['prefix' => 'api/v1'], function() 
+{
+	Route::resource('build','BuildApiController',['only' => ['index', 'show', 'store', 'update', 'destroy']]);
+});
