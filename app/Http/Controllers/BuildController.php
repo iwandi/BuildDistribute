@@ -24,7 +24,9 @@ class BuildController extends Controller
         $project = Project::getByIdOrName($projectId);
         $buildList = $project->build->all();
 
-        return view('build/index', compact('project','buildList'));
+        $buildTableView = $this->generateBuildTableView($buildList);
+
+        return view('build/index', compact('project','buildList','buildTableView'));
     }
 
     public function indexSearch($projectId, $search)
@@ -32,7 +34,9 @@ class BuildController extends Controller
         $project = Project::getByIdOrName($projectId);
         $buildList = Build::ident($project->id , $search)->get();
 
-        return view('build/index', compact('project','buildList'));
+        $buildTableView = $this->generateBuildTableView($buildList);
+
+        return view('build/index', compact('project','buildList','buildTableView'));
     }
 
     public function indexHead($projectId)
@@ -48,7 +52,39 @@ class BuildController extends Controller
                     ->groupBy('platform');
             })->groupBy('platform')->get();
 
-        return view('build/index', compact('project','buildList'));
+        $buildTableView = $this->generateBuildTableView($buildList);
+
+        return view('build/index', compact('project','buildList','buildTableView'));
+    }
+
+    function generateBuildTableView($buildList)
+    {
+        // $buildTable["{revision}"]["{platform}"] = $build
+        $buildTable = array();        
+        $platformList = array();
+
+        foreach($buildList as $build) 
+        {
+            $platform = $build->platform;
+            $revision = $build->revision;
+
+            $revisionRow = NULL;
+            $platformCell = NULL;
+
+            if (!isset($buildTable[$revision]))
+            {
+                $buildTable[$revision] = array();
+            }
+            if (!isset($buildTable[$revision][$platform]))
+            {
+                $buildTable[$revision][$platform] = array();    
+                $platformList[$platform] = $platform;        
+            }
+
+            $buildTable[$revision][$platform] = $build;
+        }
+
+        return compact('buildTable','platformList');
     }
 
     public function showPlatformHead($projectId, $platform)
