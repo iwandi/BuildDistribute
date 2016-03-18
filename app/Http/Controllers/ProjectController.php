@@ -30,12 +30,17 @@ class ProjectController extends Controller
 			$builds = $project->builds()->orderBy('created_at', 'desc')->get();
 		}
 						
-		return view('partials.builds', compact('builds'))->with('projects', Project::all());
+		return view('partials.builds', compact('builds'));
     }
 	
 	public function create()
     {		
-		return view('partials.createProject')->with('projects', Project::all());
+		return view('partials.createProject');
+    }
+	
+	public function edit()
+    {		
+		return view('partials.editProject');
     }
 	
     public function store(Request $request)
@@ -56,7 +61,26 @@ class ProjectController extends Controller
 		$project = Project::create($request->all());
 	
 		return redirect()->intended('/');
-
+    }
+	
+	public function update(Request $request, $projectId)
+    {		
+		$input = $request->all();
+			
+		$validator = Validator::make($input, [
+			'name' => 'required|unique:projects',
+		]);
 		
+		if ($validator->fails()) {
+			return redirect()->back()
+				->withInput($request->all())
+				->withErrors($validator->errors());
+		}
+		
+		$project = Project::findByIdOrName($projectId);
+		
+		$project->update($request->only('name'));
+	
+		return redirect()->intended('/');
     }
 }

@@ -15,16 +15,19 @@
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 	Route::get('/', 'HomeController@index');
-	// Route::get('/plist/{buildId}', 'BuildController@generatePlist');
 });
 
 // Protected by role routes
 Route::group(['middleware' => ['web', 'role:admin']], function () {
 	Route::get('/projects/create', 'ProjectController@create');
+	Route::get('/projects/{projectId}/edit', 'ProjectController@edit');
 	Route::post('/projects', 'ProjectController@store');
+	Route::post('/projects/{projectId}/edit', 'ProjectController@update');
 	Route::get('/projects/{projectId}', 'ProjectController@show');
+	
 	Route::get('/projects/{projectId}/builds/{buildId}', 'BuildController@show');
-	Route::get('/plist/{buildId}', 'BuildController@generateIphonePlist');
+	
+	Route::get('/plist/{buildId}.plist', 'BuildController@generateIphonePlist');
 });
 
 // Disabled
@@ -39,12 +42,14 @@ Route::group(['prefix' => '/auth'], function () {
 // RESTful API routes
 Route::group(['prefix' => '/api/v1', 'middleware' => 'api'], function () {
 	// Resources
+	Route::any('/bounce', 'API\DebugController@bounceRequest');
+	
+	Route::resource('/builds', 'API\BuildController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
     Route::resource('/projects', 'API\ProjectController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
 	Route::resource('/projects.builds', 'API\ProjectBuildController', ['only' => ['index', 'show']]);
-	Route::resource('/builds', 'API\BuildController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]); // ex. /builds?platform=ios&orderBy=revision&orderType=asc
 	Route::resource('/users', 'API\UserController', ['only' => ['index', 'show']]);
 	
 	// Additional relationships
-	Route::get('/projects/{projectId}/head', 'API\ProjectBuildController@indexHead'); // can also use query parameters ex. '/projects/123/head?platform=android'
+	Route::get('/projects/{projectId}/head', 'API\ProjectBuildController@indexHead');
 	Route::get('/builds/{buildId}/project', 'API\BuildController@getProject');
 });

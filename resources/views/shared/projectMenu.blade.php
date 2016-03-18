@@ -1,11 +1,21 @@
 @section('projectMenu')
-@if (isset($projects))
-	@foreach ($projects as $project)
+<a href="/projects/create">
+	<div class="card">
+		<div class="card-block">
+			<h3 class="card-title"><i class="fa fa-plus"></i> New project</h3>
+		</div>
+	</div>
+</a>
+<?php $allowedProjects = $commonData['allowedProjects']; ?>
+@if (isset($allowedProjects))
+	@foreach ($allowedProjects as $project)
 		<a href="/projects/{{$project->name}}">
-			<div class="card {{Request::is('projects/'.$project->name.'*') || Request::is('projects/'.$project->id.'*') ? 'card-inverse card-primary' : ''}}">
+			<div class="card {{Request::is('projects/'.$project->name.'*') || Request::is('projects/'.$project->id.'/*') ? 'card-inverse card-primary' : ''}}">
 				<div class="card-block">
-					<span class="label label-default pull-xs-right">{{$project->builds()->count()}} builds</span>
-					<h5 class="card-title">{{$project->name or 'Unkown Project'}}</h5>
+					<h3 class="card-title">
+						<span class="label label-pill label-default ">{{$project->builds()->count()}}</span>
+						{{$project->name or 'Unkown Project'}}
+					</h3>
 				</div>
 			</div>
 		</a>
@@ -13,15 +23,8 @@
 @else
 	<div class="card">
 		<div class="card-block">
-			<h5>No projects assigned</h5>
+			<h3>No projects assigned</h3>
 		</div>
 	</div>
 @endif
-<a href="/projects/create">
-	<div class="card">
-		<div class="card-block">
-			<h5 class="card-title">Add a new project</h5>
-		</div>
-	</div>
-</a>
 @endsection

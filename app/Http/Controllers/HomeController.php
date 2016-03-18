@@ -27,7 +27,6 @@ class HomeController extends Controller
      */
     public static function index(Guard $auth)
     {
-		$projects = Project::all();
-        return view('index', compact('projects'));
+        return view('index');
     }
 }

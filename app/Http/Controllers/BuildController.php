@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Response;
 use App\Helpers\AWSLinkService;
 use App\User;
 use App\Project;
@@ -27,7 +28,7 @@ class BuildController extends Controller
 		$project = Project::findByIdOrName($projectId);
 		$builds = $project->builds()->where('id', '=', $buildId)->get();
 		
-		return view('partials.builds', compact('builds'))->with('projects', Project::all());
+		return view('partials.builds', compact('builds'));
 	}
 	
 	public function generateIphonePlist($buildId)
@@ -41,7 +42,10 @@ class BuildController extends Controller
 			'bundleVersion' => $build->iphoneBundleVersion,
 			'iphoneTitle' => $build->iphoneTitle
 		];
-				
-        return view('assets.plist', ['data' => $data]);
+		
+		$contents = view('assets.plist', ['data' => $data]);
+		$response = Response::make($contents, 200);
+		$response->header('Content-Type', 'text/plain');
+		return $response;	
 	}
 }
