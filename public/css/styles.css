@@ -15,7 +15,7 @@ a:hover, a:visited, a:link, a:active {
 	padding-top: 1em;
 }
 .builds-view {
-	background-color: #dedede;
+	background-color: #e8e8e8;
 	padding-top: 1em;
 }
 
@@ -97,4 +97,15 @@ a:hover, a:visited, a:link, a:active {
 
 .form-signin input {
   margin-bottom: 20px;
+}
+
+/* Misc */
+
+.white-outline {
+	color: white;
+	border: 1px solid white;
+}
+
+.text-white {
+	color: white;
 }

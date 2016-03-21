@@ -37,7 +37,7 @@ class ProjectController extends Controller
 			$builds = $project->builds()->orderBy('created_at', 'desc')->get();
 		}
 						
-		return view('partials.builds', compact('builds'));
+		return view('partials.buildsList', compact('builds'));
     }
 	
 	public function create()

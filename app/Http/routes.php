@@ -19,7 +19,7 @@ Route::group(['middleware' => 'web'], function () {
 
 // Protected by role routes
 Route::group(['middleware' => ['web', 'role:admin']], function () {
-	Route::resource('/projects', 'ProjectController', ['only' => ['index', 'show', 'store', 'edit', 'update']]);
+	Route::resource('/projects', 'ProjectController', ['only' => ['index', 'show', 'store', 'edit', 'update', 'create']]);
 	Route::get('/builds/{buildId}', 'BuildController@show');
 	Route::get('/projects/{projectId}/builds/{buildId}', 'BuildController@nestedShow');
 	Route::get('/plist/{buildId}.plist', 'BuildController@generateIphonePlist');

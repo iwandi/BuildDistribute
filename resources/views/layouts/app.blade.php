@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 	<title>Build Distribution</title>
 
@@ -13,12 +13,12 @@
 	<link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
 
 	<!-- Styles -->
+	<link rel="stylesheet" href="{{url('css/normalize.css')}}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="{{url('css/styles.css')}}">
 
 	<!-- CSS Addons -->
 	<link rel="stylesheet" href="{{url('css/pushy.css')}}">
-	<link rel="stylesheet" href="{{url('css/normalize.css')}}">
 
 </head>
 
@@ -32,10 +32,11 @@
 				<p>You are currently not signed in</p>
 			</li>
 			<li class="pushy-link">
-				<a href="{{ url('/login') }}">Login</a>
+				<a class="btn btn-secondary-outline white-outline" role="button" href="{{ url('/login') }}">Login</a>
 			</li>
+			<br>
 			<li class="pushy-link">
-				<a href="{{ url('/register') }}">Register</a>
+				<a class="btn btn-secondary-outline white-outline" role="button" href="{{ url('/register') }}">Register</a>
 			</li>
 			@else
 			<li>
@@ -89,6 +90,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
 	<script src="{{url('js/pushy.min.js')}}"></script>
+	<script src="{{url('js/tableSorter.js')}}"></script>
+
 </body>
 
 </html>

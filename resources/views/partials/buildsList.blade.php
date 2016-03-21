@@ -1,10 +1,10 @@
 @extends('layouts.app') @section('mainView')
 <div class="card">
-	<div class="card-header">
-		<p class="text-xs-left">
+	<div class="card-header card-inverse card-primary">
+		<p class="text-xs-left text-white">
 			@if (isset($commonData['resourceInPath']))
 			<?php $projectInPath = $commonData['resourceInPath']; ?>
-				<a href="{{url('projects/'.$projectInPath->name.'/edit')}}"><button type="button" class="btn btn-primary-outline btn-sm pull-xs-right">Edit</button></a>
+				<a href="{{url('projects/'.$projectInPath->name.'/edit')}}"><button type="button" class="btn btn-secondary-outline btn-sm pull-xs-right white-outline">Edit</button></a>
 				ID: {{$projectInPath->id}} | Identifier: {{$projectInPath->ident}}
 			@else
 				No Project selected
@@ -16,14 +16,14 @@
 		<table class="table table-striped table-sm table-bordered">
 			<thead>
 				<tr>
-					<th>#</th>
-					<th>Revision</th>
-					<th>Platform</th>
-					<th></th>
-					<th></th>
+					<th class="text-xs-center">#</th>
+					<th class="text-xs-center">Revision</th>
+					<th class="text-xs-center">Platform</th>
+					<th class="text-xs-center"></th>
+					<th class="text-xs-center"></th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="text-xs-center">
 			@if (isset($builds) && count($builds) > 0)
 				@foreach ($builds as $key=>$build)
 				<tr>
@@ -35,7 +35,6 @@
 						@elseif (strtolower($build->platform) == 'iphone')
 						<i class="fa fa-apple"></i>
 						@endif
-						{{$build->platform}}
 					</td>
 					<td><a href="{{url('builds/'.$build->id)}}">Details</a></td>
 					<td>
