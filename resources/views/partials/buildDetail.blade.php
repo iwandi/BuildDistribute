@@ -8,7 +8,7 @@
 				Install
 			</a>
 			@elseif (strtolower($build->platform) == 'iphone')
-			<a href="itms-services://?action=download-manifest&url={!!url('/plist/'.$build->id.'.app.plist')!!}"  class="pull-xs-right text-white">
+			<a href="itms-services://?action=download-manifest&url={!!url('/plist/'.$build->id.'.plist')!!}"  class="pull-xs-right text-white">
 				Install
 			</a>
 			@endif

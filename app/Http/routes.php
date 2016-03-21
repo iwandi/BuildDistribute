@@ -26,7 +26,7 @@ Route::group(['middleware' => ['web', 'role:admin', 'force.ssl']], function () {
 });
 
 Route::group(['middleware' => ['force.ssl']], function () {
-	Route::get('/plist/{buildId}.app.plist', 'InstallLinkController@generateIphonePlist');
+	Route::get('/plist/{buildId}.plist', 'InstallLinkController@generateIphonePlist');
 });
 
 // Disabled

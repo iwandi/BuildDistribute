@@ -15,6 +15,10 @@ class InstallLinkController extends Controller
 	{
 		$build = Build::find($buildId);
 		
+		if (!$build) {
+			abort(404);
+		}
+		
 		$data = [
 			'{%url%}' => url('/awsRedirect/'.$build->id),
 			'{%bundleIdentifier%}' => $build->bundleIdentifier,
@@ -60,7 +64,7 @@ class InstallLinkController extends Controller
 			$contents = str_replace($key, $value, $contents);
 		}
 		
-		$fileName = $build->installFileName.".app.plist";
+		$fileName = $build->installFileName.".plist";
 		$headers = ['Content-type'=>'application/xml', 'Content-Disposition'=>sprintf('attachment; filename="%s"', $fileName),'Content-Length'=>strlen($contents)];
 		
 		return Response::make($contents, 200, $headers);
