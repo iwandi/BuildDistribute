@@ -13,5 +13,4 @@ class DebugController extends Controller
     {
 		return $request;
     }
-
 }

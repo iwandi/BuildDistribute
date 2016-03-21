@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Response;
-use App\Helpers\AWSLinkService;
+use App\Helpers\AwsLinkService;
 use App\User;
 use App\Project;
 use App\Build;
@@ -27,7 +27,7 @@ class BuildController extends Controller
 	{
 		$project = Project::findByIdOrName($projectId);
 		$builds = $project->builds()->where('id', '=', $buildId)->get();
-		
+    
 		return view('partials.builds', compact('builds'));
 	}
 	
@@ -35,9 +35,8 @@ class BuildController extends Controller
 	{
 		$build = Build::find($buildId);
 		
-		// TODO: put actual values for AWS
 		$data = [
-			'url' => AWSLinkService::getAwsPreSignedLink($build->installFolder, $build->installFileName),
+			'url' => AWSLinkService::getPresignedLink($build->installFolder, $build->installFileName),
 			'bundleIdentifier' => $build->bundleIdentifier,
 			'bundleVersion' => $build->iphoneBundleVersion,
 			'iphoneTitle' => $build->iphoneTitle

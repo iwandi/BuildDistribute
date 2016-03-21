@@ -7,13 +7,13 @@ use App\Build;
 
 class AwsLinkService
 {
-	public static function getAwsPreSignedLink($installFolder, $installFileName)
+	public static function getPresignedLink($folder, $file)
 	{
 		$s3 = AWS::createClient('s3');
 		
 		$cmd = $s3->getCommand('GetObject', [
-			'Bucket' => $installFolder,
-			'Key'    => $installFileName
+			'Bucket' => $folder,
+			'Key'    => $file
 		]);
 
 		$request = $s3->createPresignedRequest($cmd, '+60 minutes');
