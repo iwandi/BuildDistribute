@@ -21,10 +21,17 @@ class ProjectController extends Controller
     {
         $this->middleware('auth');
     }
+	
+	public function index()
+    {	
+		return view('partials.builds');
+    }
 
-    public function show(Request $request, Guard $auth)
+    public function show($id)
     {
-		$project = Project::findByIdOrName($request->projectId);
+		$project = Project::findByIdOrName($id);
+		$builds = [];
+		
 		if ($project)
 		{
 			$builds = $project->builds()->orderBy('created_at', 'desc')->get();
@@ -64,7 +71,8 @@ class ProjectController extends Controller
     }
 	
 	public function update(Request $request, $projectId)
-    {		
+    {
+		
 		$input = $request->all();
 			
 		$validator = Validator::make($input, [

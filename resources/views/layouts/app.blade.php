@@ -56,7 +56,10 @@
 
 		<nav class="navbar navbar-light bg-faded">
 			<div class="nav navbar-nav pull-xs-left">
-				<a class="navbar-brand" href="/"><strong>Wolpertinger Games</strong> | Build Distribution</a>
+				<a class="navbar-brand" href="/">
+					<span class="hidden-xs-down"><strong>Wolpertinger Games</strong> | </span>
+					Build Distribution
+				</a>
 			</div>
 			<div class="nav navbar-nav pull-xs-right">
 				<a class="nav-link active pushy-enable-btn">&#9776; Menu</a>

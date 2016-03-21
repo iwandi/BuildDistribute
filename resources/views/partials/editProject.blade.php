@@ -1,10 +1,11 @@
 @extends('layouts.app') @section('mainView')
-<?php $projectInPath = $commonData['projectInPath']; ?>
-@if (isset($projectInPath))
+@if (isset($commonData['resourceInPath']))
+<?php $projectInPath = $commonData['resourceInPath']; ?>
 <div class="container">
-	<form class="form-signin" method="POST" action="{{ url('/projects/'.$projectInPath->name.'/edit') }}">
+	<form class="form-signin" method="POST" action="{{ url('/projects/'.$projectInPath->name) }}">
 		{!! csrf_field() !!}
 		<fieldset class="form-group">
+			<input name="_method" type="hidden" value="PUT">
 
 			<label class="sr-only">Project Name</label>
 			<input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="{{$projectInPath->name}}">

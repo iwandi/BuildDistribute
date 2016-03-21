@@ -19,14 +19,9 @@ Route::group(['middleware' => 'web'], function () {
 
 // Protected by role routes
 Route::group(['middleware' => ['web', 'role:admin']], function () {
-	Route::get('/projects/create', 'ProjectController@create');
-	Route::get('/projects/{projectId}/edit', 'ProjectController@edit');
-	Route::post('/projects', 'ProjectController@store');
-	Route::post('/projects/{projectId}/edit', 'ProjectController@update');
-	Route::get('/projects/{projectId}', 'ProjectController@show');
-	
-	Route::get('/projects/{projectId}/builds/{buildId}', 'BuildController@show');
-	
+	Route::resource('/projects', 'ProjectController', ['only' => ['index', 'show', 'store', 'edit', 'update']]);
+	Route::get('/builds/{buildId}', 'BuildController@show');
+	Route::get('/projects/{projectId}/builds/{buildId}', 'BuildController@nestedShow');
 	Route::get('/plist/{buildId}.plist', 'BuildController@generateIphonePlist');
 });
 

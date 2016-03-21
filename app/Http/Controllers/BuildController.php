@@ -23,12 +23,23 @@ class BuildController extends Controller
         $this->middleware('auth');
     }
 	
-	public function show(Guard $auth, $projectId, $buildId)
+	public function show($buildId)
 	{
-		$project = Project::findByIdOrName($projectId);
-		$builds = $project->builds()->where('id', '=', $buildId)->get();
+		$build = Build::find($buildId);
+		
+		if (!$build) {
+			abort(404);
+		}
+		else {
+			return redirect()->intended('/projects/'.$build->project->name.'/builds/'.$buildId);
+		}
+	}
+	
+	public function nestedShow($projectId, $buildId)
+	{
+		$build = Build::find($buildId);
     
-		return view('partials.builds', compact('builds'));
+		return view('partials.buildDetail', compact('build'));
 	}
 	
 	public function generateIphonePlist($buildId)
