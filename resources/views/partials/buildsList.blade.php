@@ -39,9 +39,9 @@
 					<td><a href="{{url('builds/'.$build->id)}}">Details</a></td>
 					<td>
 						@if (strtolower($build->platform) == 'android')
-						<a href="{!!AwsLinkService::getPresignedLink($build->installFolder, $build->installFileName)!!}">Install</a>
+						<a href="{!!url('/awsRedirect/'.$build->id)!!}">Install</a>
 						@elseif (strtolower($build->platform) == 'iphone')
-						<a href="itms-services://?action=download-manifest&url={!!url('/plist/'.$build->id.'.plist')!!}">Install</a>
+						<a href="itms-services://?action=download-manifest&url={!!url('/plist/'.$build->id.'.app.plist')!!}">Install</a>
 						@endif
 					</td>
 				</tr>

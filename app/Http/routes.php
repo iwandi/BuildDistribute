@@ -12,17 +12,21 @@
 */
 
 // Web routes
-Route::group(['middleware' => 'web'], function () {
+Route::group(['middleware' => ['web', 'force.ssl']], function () {
     Route::auth();
 	Route::get('/', 'HomeController@index');
 });
 
 // Protected by role routes
-Route::group(['middleware' => ['web', 'role:admin']], function () {
+Route::group(['middleware' => ['web', 'role:admin', 'force.ssl']], function () {
 	Route::resource('/projects', 'ProjectController', ['only' => ['index', 'show', 'store', 'edit', 'update', 'create']]);
 	Route::get('/builds/{buildId}', 'BuildController@show');
 	Route::get('/projects/{projectId}/builds/{buildId}', 'BuildController@nestedShow');
-	Route::get('/plist/{buildId}.plist', 'BuildController@generateIphonePlist');
+	Route::get('/awsRedirect/{buildId}', 'InstallLinkController@getAwsAndRedirect');
+});
+
+Route::group(['middleware' => ['force.ssl']], function () {
+	Route::get('/plist/{buildId}.app.plist', 'InstallLinkController@generateIphonePlist');
 });
 
 // Disabled
