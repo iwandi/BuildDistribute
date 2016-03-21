@@ -9,12 +9,13 @@
 			</a>
 			@elseif (strtolower($build->platform) == 'iphone')
 			<a href="itms-services://?action=download-manifest&url={!!url('/plist/'.$build->id.'.plist')!!}" class="card-link pull-xs-right">
-			Install
+				Install
+			</a>
 			@endif
 		</div>
-		<div class="container">
+		<div class="container-fluid">
 			<br>
-			<table class="table table-striped table-sm">
+			<table class="table table-striped">
 				<tbody>
 					<tr>
 						<th>Revision</th>
@@ -47,7 +48,7 @@
 @else
 <div class="card card-inverse card-danger">
 	<div class="card-block">
-		<h3 class="card-title">No builds found</h3>
+		<h3 class="card-title">No build found</h3>
 	</div>
 </div>
 @endif @endsection
