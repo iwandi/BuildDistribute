@@ -62,9 +62,7 @@
 					Build Distribution
 				</a>
 			</div>
-			<div class="nav navbar-nav pull-xs-right">
-				<a class="nav-link active pushy-enable-btn">&#9776; Menu</a>
-			</div>
+			<a class="btn active pushy-enable-btn pull-xs-right">&#9776; Menu</a>
 		</nav>
 	</div>
 
