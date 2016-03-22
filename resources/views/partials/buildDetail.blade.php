@@ -2,43 +2,51 @@
 @if (isset($build) && count($build) > 0)
 	<div class="card">
 		<div class="card-header text-white card-inverse card-primary">
-			Build # {{$build->buildNumber}}
-			@if (strtolower($build->platform) == 'android')
-			<a href="{!!url('/downloads/builds/'.$build->id)!!}" class="pull-xs-right text-white">
-				Install
-			</a>
-			@elseif (strtolower($build->platform) == 'iphone')
-			<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'.plist')!!}"  class="pull-xs-right text-white">
-				Install
-			</a>
-			@endif
+			<div class="row">
+				<div class="col-md-12">
+					<label>Build # {{$build->buildNumber}}</label>
+					<div class="btn-group pull-xs-right">
+						@if (strtolower($build->platform) == 'android')
+						<a href="{!!url('/downloads/builds/'.$build->id)!!}" class="btn btn-secondary-outline btn-sm white-outline">
+							Install
+						</a>
+						@elseif (strtolower($build->platform) == 'iphone')
+						<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'.plist')!!}"  class="btn btn-secondary-outline btn-sm white-outline">
+							Install
+						</a>
+						@endif
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="container-fluid">
 			<br>
-			<table class="table table-bordered table-sm">
-				<tbody>
-					<tr>
-						<th>Revision</th>
-						<td>{{$build->revision or 'N/A'}}</td>
-					</tr>
-					<tr>
-						<th>Platform</th>
-						<td>{{$build->platform or 'N/A'}}</td>
-					</tr>
-					<tr>
-						<th>Bundle Identifier</th>
-						<td>{{$build->bundleIdentifier or 'N/A'}}</td>
-					</tr>
-					<tr>
-						<th>Version</th>
-						<td>{{$build->version or 'N/A'}}</td>
-					</tr>
-					<tr>
-						<th>ID</th>
-						<td>{{$build->id or 'N/A'}}</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="table-responsive">
+				<table class="table table-bordered table-sm">
+					<tbody>
+						<tr>
+							<th>Revision</th>
+							<td>{{$build->revision or 'N/A'}}</td>
+						</tr>
+						<tr>
+							<th>Platform</th>
+							<td>{{$build->platform or 'N/A'}}</td>
+						</tr>
+						<tr>
+							<th>Bundle Identifier</th>
+							<td>{{$build->bundleIdentifier or 'N/A'}}</td>
+						</tr>
+						<tr>
+							<th>Version</th>
+							<td>{{$build->version or 'N/A'}}</td>
+						</tr>
+						<tr>
+							<th>ID</th>
+							<td>{{$build->id or 'N/A'}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<div class="card-footer text-muted">Received at {{date_format($build->created_at, 'g:ia \o\n l jS F Y')}}</div>
 	</div>
