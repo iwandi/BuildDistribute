@@ -43,7 +43,7 @@
 				<p>Logged in as {{Auth::user()->name}}</p>
 			</li>
 			<li class="pushy-link">
-				<a href="{{ url('/logout') }}">Logout</a>
+				<a class="btn btn-secondary-outline white-outline" href="{{ url('/logout') }}">Logout</a>
 			</li>
 			@endif
 		</ul>

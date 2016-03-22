@@ -22,11 +22,13 @@ Route::group(['middleware' => ['web', 'role:admin', 'force.ssl']], function () {
 	Route::resource('/projects', 'ProjectController', ['only' => ['index', 'show', 'store', 'edit', 'update', 'create']]);
 	Route::get('/builds/{buildId}', 'BuildController@show');
 	Route::get('/projects/{projectId}/builds/{buildId}', 'BuildController@nestedShow');
-	Route::get('/awsRedirect/{buildId}', 'InstallLinkController@getAwsAndRedirect');
+	Route::get('/downloads/builds/{buildId}', 'InstallLinkController@getAwsBuild');
 });
 
+// iOS doesn't hold session cookies for retrieving the plist
+// TODO add url token verification
 Route::group(['middleware' => ['force.ssl']], function () {
-	Route::get('/plist/{buildId}.plist', 'InstallLinkController@generateIphonePlist');
+	Route::get('/downloads/plist/{buildId}.plist', 'InstallLinkController@getAwsPlist');
 });
 
 // Disabled

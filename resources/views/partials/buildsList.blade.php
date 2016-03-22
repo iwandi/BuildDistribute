@@ -36,12 +36,12 @@
 						<i class="fa fa-apple"></i>
 						@endif
 					</td>
-					<td><a href="{{url('builds/'.$build->id)}}">Details</a></td>
+					<td><a href="{{url('/builds/'.$build->id)}}">Details</a></td>
 					<td>
 						@if (strtolower($build->platform) == 'android')
-						<a href="{!!url('/awsRedirect/'.$build->id)!!}">Install</a>
+						<a href="{!!url('/downloads/builds/'.$build->id)!!}">Install</a>
 						@elseif (strtolower($build->platform) == 'iphone')
-						<a href="itms-services://?action=download-manifest&url={!!url('/plist/'.$build->id.'.plist')!!}">Install</a>
+						<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'.plist')!!}">Install</a>
 						@endif
 					</td>
 				</tr>

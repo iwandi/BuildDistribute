@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Response;
-use App\Helpers\AwsLinkService;
+use App\Helpers\AwsS3Service;
 use App\Build;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ use Illuminate\Contracts\Auth\Guard;
 
 class InstallLinkController extends Controller
 {
-	public function generateIphonePlist ($buildId)
+	public function getAwsPlist ($buildId)
 	{
 		$build = Build::find($buildId);
 		
@@ -19,13 +19,53 @@ class InstallLinkController extends Controller
 			abort(404);
 		}
 		
+		// TODO: store link and only generate new one if already expired
+		
+		// Generates plist for iOS devices and uploads to S3
+		$this->generateAndUploadPlist($build);
+		
+		// Activate link in S3 to plist file, also for 60 minutes
+		$link = AwsS3Service::getPresignedLink($build->installFolder, $build->installFileName.'.plist', 60);
+		
+		// Redirect iOS to the plist in S3
+		return redirect()->intended($link);
+	}
+	
+	public function getAwsBuild ($buildId)
+	{
+		$build = Build::find($buildId);
+		
+		if (!$build) {
+			abort(404);
+		}
+		
+		// Defaults to 60 minutes
+		$link = AwsS3Service::getPresignedLink($build->installFolder, $build->installFileName);
+		
+		return redirect()->intended($link);
+	}
+	
+	// iOS wants the plist and the ipa in the same domain under HTTPS
+	function generateAndUploadPlist ($build)
+	{		
+		// Activate Aws Build link for 60 minutes
 		$data = [
-			'{%url%}' => url('/awsRedirect/'.$build->id),
+			'{%url%}' => AwsS3Service::getPresignedLink($build->installFolder, $build->installFileName, 60),
 			'{%bundleIdentifier%}' => $build->bundleIdentifier,
 			'{%bundleVersion%}' => $build->iphoneBundleVersion,
 			'{%iphoneTitle%}' => $build->iphoneTitle
 		];
 		
+		// Prepare plist
+		$contents = $this->fillPlist($data);
+		
+		// Upload to S3, overwrite old plist
+		$s3Object = AwsS3Service::uploadObject($build->installFolder, $build->installFileName.'.plist', $contents);
+		
+		return $s3Object;
+	}
+	
+	function fillPlist($data) {
 		// Using Laravels template system didn't work.
 		// TODO: make this nicer :)
 		$contents = "<?xml version='1.0' encoding='UTF-8'?>
@@ -41,7 +81,7 @@ class InstallLinkController extends Controller
 										<key>kind</key>
 										<string>software-package</string>
 										<key>url</key>
-										<string>{%url%}</string>
+										<string><![CDATA[{%url%}]]></string>
 									</dict>
 								</array>
 								<key>metadata</key>
@@ -64,22 +104,6 @@ class InstallLinkController extends Controller
 			$contents = str_replace($key, $value, $contents);
 		}
 		
-		$fileName = $build->installFileName.".plist";
-		$headers = ['Content-type'=>'application/xml', 'Content-Disposition'=>sprintf('attachment; filename="%s"', $fileName),'Content-Length'=>strlen($contents)];
-		
-		return Response::make($contents, 200, $headers);
-	}
-	
-	public function getAwsAndRedirect ($buildId)
-	{
-		$build = Build::find($buildId);
-		
-		if (!$build) {
-			abort(404);
-		}
-		
-		$link = AwsLinkService::getPresignedLink($build->installFolder, $build->installFileName);
-		
-		return redirect()->intended($link);
+		return $contents;
 	}
 }

@@ -4,11 +4,11 @@
 		<div class="card-header text-white card-inverse card-primary">
 			Build # {{$build->buildNumber}}
 			@if (strtolower($build->platform) == 'android')
-			<a href="{!!url('/awsRedirect/'.$build->id)!!}" class="pull-xs-right text-white">
+			<a href="{!!url('/downloads/builds/'.$build->id)!!}" class="pull-xs-right text-white">
 				Install
 			</a>
 			@elseif (strtolower($build->platform) == 'iphone')
-			<a href="itms-services://?action=download-manifest&url={!!url('/plist/'.$build->id.'.plist')!!}"  class="pull-xs-right text-white">
+			<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'.plist')!!}"  class="pull-xs-right text-white">
 				Install
 			</a>
 			@endif
