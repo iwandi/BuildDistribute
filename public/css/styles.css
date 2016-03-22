@@ -109,3 +109,13 @@ a:hover, a:visited, a:link, a:active {
 .text-white {
 	color: white;
 }
+
+.btn-secondary-outline.white-outline:hover {
+	background-color: white;
+	color: #0275D8;
+}
+
+.btn-secondary-outline.white-outline.active {
+	background-color: white;
+	color: #0275D8;
+}

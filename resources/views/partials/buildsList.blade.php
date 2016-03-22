@@ -1,19 +1,37 @@
 @extends('layouts.app') @section('mainView')
 <div class="card">
 	<div class="card-header card-inverse card-primary">
-		<p class="text-xs-left text-white">
-			@if (isset($commonData['resourceInPath']))
-			<?php $projectInPath = $commonData['resourceInPath']; ?>
-				<a href="{{url('projects/'.$projectInPath->name.'/edit')}}"><button type="button" class="btn btn-secondary-outline btn-sm pull-xs-right white-outline">Edit</button></a>
-				ID: {{$projectInPath->id}} | Identifier: {{$projectInPath->ident}}
-			@else
-				No Project selected
-			@endif
-		</p>
+		
+		@if (isset($commonData['resourceInPath']))
+		<?php $projectInPath = $commonData['resourceInPath']; ?>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="btn-group p-l-1 pull-xs-right">
+						<label><a href="{{url('projects/'.$projectInPath->name.'/edit')}}" class="btn btn-secondary-outline btn-sm white-outline">Edit Project</a></label>
+					</div>
+					<div id="platformRadio" class="btn-group pull-xs-right" data-toggle="buttons">
+						<label class="btn btn-secondary-outline btn-sm white-outline active">
+							<input type="radio" name="options" id="all" autocomplete="off" checked>All</input>
+						</label>
+						<label class="btn btn-secondary-outline btn-sm white-outline">
+							<input type="radio" name="options" id="iphone" autocomplete="off">iOS</input>
+						</label>
+						<label class="btn btn-secondary-outline btn-sm white-outline">
+							<input type="radio" name="options" id="android" autocomplete="off">Android</input>
+						</label>
+					</div>
+				</div>
+			</div>
+		@else
+			<div class="text-xs-left text-white">
+				<p>No Project selected</p>
+			</div>
+		@endif
+		
 	</div>
 	<div class="container-fluid">
 		<br>
-		<table class="table table-striped table-sm table-bordered">
+		<table id="buildsTable" class="table table-striped table-sm table-bordered">
 			<thead>
 				<tr>
 					<th class="text-xs-center">#</th>
@@ -26,21 +44,18 @@
 			<tbody class="text-xs-center">
 			@if (isset($builds) && count($builds) > 0)
 				@foreach ($builds as $key=>$build)
-				<tr>
+				<?php $buildPlatform = strtolower($build->platform); ?>
+				<tr id="{{$buildPlatform}}">
 					<td>{{$build->buildNumber or 'N/A'}}</td>
 					<td>{{$build->revision or 'N/A'}}</td>
 					<td>
-						@if (strtolower($build->platform) == 'android')
-						<i class="fa fa-android"></i>
-						@elseif (strtolower($build->platform) == 'iphone')
-						<i class="fa fa-apple"></i>
-						@endif
+						{!!$buildPlatform == 'android' ? '<i class="fa fa-android"></i> Android' : '<i class="fa fa-apple"></i> iOS'!!}
 					</td>
 					<td><a href="{{url('/builds/'.$build->id)}}">Details</a></td>
 					<td>
-						@if (strtolower($build->platform) == 'android')
+						@if ($buildPlatform == 'android')
 						<a href="{!!url('/downloads/builds/'.$build->id)!!}">Install</a>
-						@elseif (strtolower($build->platform) == 'iphone')
+						@elseif ($buildPlatform == 'iphone')
 						<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'.plist')!!}">Install</a>
 						@endif
 					</td>
