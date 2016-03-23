@@ -1,6 +1,6 @@
 @extends('layouts.app') @section('mainView')
-@if (isset($commonData['resourceInPath']))
-<?php $projectInPath = $commonData['resourceInPath']; ?>
+<?php $projectInPath = ViewService::getResourceInPath(); ?>
+@if (isset($projectInPath))
 <div class="container">
 	<form class="form-signin" method="POST" action="{{ url('/projects/'.$projectInPath->name) }}">
 		{!! csrf_field() !!}
@@ -15,7 +15,7 @@
 				</span>
 			@endif
 			
-			<input class="form-control" type="text" placeholder="Ident: {{$projectInPath->ident}}" disabled>
+			<input class="form-control" type="text" placeholder="Ident: {{$projectInPath->ident}}" readonly>
 			<p class="text-muted text-xs-right">*Project ident cannot be modified</p>
 			<br>
 			<button type="submit" class="btn btn-lg btn-primary btn-block">Save changes</button>

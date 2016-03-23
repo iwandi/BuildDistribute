@@ -22,7 +22,7 @@
 						<th class="text-xs-center">Email</th>
 						<th class="text-xs-center">Role</th>
 						<th class="text-xs-center">Projects</th>
-						<th class="text-xs-center"></th>
+						<!--<th class="text-xs-center"></th>-->
 					</tr>
 				</thead>
 				<tbody class="text-xs-center">
@@ -34,7 +34,7 @@
 						<td>{{$user->email or 'N/A'}}</td>
 						<td>{{$user->role->name or 'N/A'}}</td>
 						<td>{{implode (',', $user->projectNames())}}</td>
-						<td><a href="{!!url('/admin/users/'.$user->id)!!}">Edit User</a></td>
+						<!--<td><a href="{!!url('/admin/users/'.$user->id)!!}" disabled>Edit User</a></td>-->
 					</tr>
 					@endforeach
 				@else

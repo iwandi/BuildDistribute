@@ -207,7 +207,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
 		'AWS' => Aws\Laravel\AwsFacade::class,
-		'ViewServide' => App\Providers\ViewServiceProvider::class,
+		'ViewService' => App\Providers\ViewServiceProvider::class,
     ],
 
 ];

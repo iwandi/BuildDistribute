@@ -15,7 +15,7 @@ class ProjectPermissionController extends Controller
 {
     public static function revokeAccess(Request $request)
     {
-		if (Gate::denies('manageUsers')) {
+		if (Gate::denies('manageAll')) {
 			abort(403);
 		}
 		
@@ -33,13 +33,13 @@ class ProjectPermissionController extends Controller
 	
 	public static function grantAccess(Request $request)
     {
-		if (Gate::denies('manageProjects')) {
+		if (Gate::denies('manageAll')) {
 			abort(403);
 		}
-		dd($request->only('userId'));
+		
 		$project = Project::find($request->only('projectId'))->first();
 		$user = User::find($request->only('userId'))->first();
-		
+				
 		if (!$project || !$user) {
 			abort(400);
 		}

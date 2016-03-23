@@ -4,8 +4,8 @@
 	<div class="card-header card-inverse card-primary">
 		<div class="row">
 			<div class="col-md-12">
-				@if (isset($commonData['resourceInPath']))
-				<?php $projectInPath = $commonData['resourceInPath']; ?>
+				<?php $projectInPath = ViewService::getResourceInPath(); ?>
+				@if (isset($projectInPath))
 				<div class="btn-group p-l-1 pull-xs-right">
 					<label><a href="{{url('projects/'.$projectInPath->name.'/edit')}}" class="btn btn-secondary-outline btn-sm white-outline">Edit Project</a></label>
 				</div>

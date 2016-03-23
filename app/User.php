@@ -60,7 +60,10 @@ class User extends Authenticatable
 		return $this->belongsTo('App\Role');
 	}
 	
-	public function isSuperAdmin() {
-		return $this->role->name === 'superAdmin';
+	public function hasRole($roleName) {
+		if ($this->role) {
+			return $this->role->name === $roleName;
+		}
+		return false;
 	}
 }

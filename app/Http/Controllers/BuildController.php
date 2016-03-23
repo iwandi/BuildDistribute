@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Gate;
 use App\Project;
 use App\Build;
 use App\Http\Requests;
@@ -11,21 +12,27 @@ use Illuminate\Contracts\Auth\Guard;
 class BuildController extends Controller
 {	
 	public function show($buildId)
-	{
-		
+	{		
 		$build = Build::find($buildId);
 		
 		if (!$build) {
 			abort(404);
 		}
-		else {
-			return redirect()->intended('/projects/'.$build->project->name.'/builds/'.$buildId);
+		
+		if (Gate::denies('viewOneProject', $build->project->id)) {
+			abort(403);
 		}
+		
+		return redirect()->intended('/projects/'.$build->project->name.'/builds/'.$buildId);
 	}
 	
 	public function nestedShow($projectId, $buildId)
-	{
+	{		
 		$build = Build::find($buildId);
+		
+		if (Gate::denies('viewOneProject', $build->project->id)) {
+			abort(403);
+		}
     
 		return view('common.buildDetail', compact('build'));
 	}

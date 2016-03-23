@@ -22,32 +22,44 @@ class ProjectController extends Controller
     {
 		$project = Project::findByIdOrName($id);
 		
+		if (!$project)
+		{
+			abort(404);
+		}
+			
 		if (Gate::denies('viewOneProject', $project->id)) {
 			abort(403);
 		}
-		
-		$builds = [];
-		
-		if ($project)
-		{
-			$builds = $project->builds()->orderBy('created_at', 'desc')->get();
-		}
+				
+		$builds = $project->builds()->orderBy('created_at', 'desc')->get();
 						
 		return view('common.buildsList', compact('builds'));
     }
 	
 	public function create()
-    {		
+    {
+		if (Gate::denies('modifyProjects')) {
+			abort(403);
+		}
+		
 		return view('common.createProject');
     }
 	
 	public function edit()
-    {		
+    {
+		if (Gate::denies('modifyProjects')) {
+			abort(403);
+		}
+		
 		return view('common.editProject');
     }
 	
     public function store(Request $request)
-    {		
+    {
+		if (Gate::denies('modifyProjects')) {
+			abort(403);
+		}
+			
 		$input = $request->all();
 			
 		$validator = Validator::make($input, [
@@ -68,6 +80,9 @@ class ProjectController extends Controller
 	
 	public function update(Request $request, $projectId)
     {
+		if (Gate::denies('modifyProjects')) {
+			abort(403);
+		}
 		
 		$input = $request->all();
 			

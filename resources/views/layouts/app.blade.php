@@ -104,6 +104,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
 	<script src="{{url('js/pushy.min.js')}}"></script>
 	<script src="{{url('js/filterTable.js')}}"></script>
+	<script src="{{url('js/custom.js')}}"></script>
 </body>
 
 </html>

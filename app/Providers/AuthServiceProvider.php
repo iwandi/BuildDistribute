@@ -29,17 +29,20 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies($gate);
 		
 		$gate->before(function($user, $ability) {
-			if ($user->isSuperAdmin()) {
+			if ($user->hasRole('superAdmin')) {
 				return true;
 			}
 		});
 		
 		$gate->define('manageAll', function($user) {
-			return $user->isSuperAdmin();
+			return $user->hasRole('superAdmin');
 		});
 		
-		$gate->define('viewAllProjects', function($user) {
-			return $user->role->name === 'wlpTeam';
+		$gate->define('viewOneProject', function($user, $projectId) {
+			if ($user->hasRole('wlpTeam')) {
+				return true;
+			}
+			return ProjectPermission::checkForPermission($user->id, $projectId);
 		});
 		
 		$gate->define('viewOneProject', function($user, $projectId) {
@@ -47,6 +50,10 @@ class AuthServiceProvider extends ServiceProvider
 				return true;
 			};
 			return ProjectPermission::checkForPermission($user->id, $projectId);
+		});
+		
+		$gate->define('modifyProjects', function($user) {
+			return $user->hasRole('superAdmin');
 		});
     }
 }

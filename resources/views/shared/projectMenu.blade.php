@@ -8,8 +8,8 @@
 	</div>
 </a>
 @endcan
-<?php $allowedProjects = $commonData['allowedProjects']; ?>
-@if (isset($allowedProjects))
+<?php $allowedProjects = ViewService::getAllowedProjects(); ?>
+@if (isset($allowedProjects) && count($allowedProjects) > 0)
 	@foreach ($allowedProjects as $project)
 		<a href="/projects/{{$project->name}}">
 			<div class="card {{Request::is('projects/'.$project->name.'*') || Request::is('projects/'.$project->id.'/*') ? 'card-inverse card-primary' : ''}}">
@@ -23,7 +23,7 @@
 		</a>
 	@endforeach
 @else
-	<div class="card">
+	<div class="card card-inverse card-warning">
 		<div class="card-block">
 			<h5>No projects assigned</h5>
 		</div>
