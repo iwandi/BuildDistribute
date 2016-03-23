@@ -4,7 +4,7 @@
 		<div class="card-header text-white card-inverse card-primary">
 			<div class="row">
 				<div class="col-md-12">
-					<label>Build # {{$build->buildNumber}}</label>
+					<label><h5>Build # {{$build->buildNumber}}</h5></label>
 					<div class="btn-group pull-xs-right">
 						@if (strtolower($build->platform) == 'android')
 						<a href="{!!url('/downloads/builds/'.$build->id)!!}" class="btn btn-secondary-outline btn-sm white-outline">

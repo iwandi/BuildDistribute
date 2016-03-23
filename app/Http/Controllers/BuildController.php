@@ -12,6 +12,7 @@ class BuildController extends Controller
 {	
 	public function show($buildId)
 	{
+		
 		$build = Build::find($buildId);
 		
 		if (!$build) {
@@ -26,6 +27,6 @@ class BuildController extends Controller
 	{
 		$build = Build::find($buildId);
     
-		return view('partials.buildDetail', compact('build'));
+		return view('common.buildDetail', compact('build'));
 	}
 }

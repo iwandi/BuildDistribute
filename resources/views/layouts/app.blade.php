@@ -45,6 +45,14 @@
 			<li class="pushy-link m-b-1">
 				<a class="btn btn-secondary-outline white-outline" href="{{ url('/projects') }}">Projects</a>
 			</li>
+			@can('manageAll')
+			<li class="pushy-link m-b-1">
+				<a class="btn btn-secondary-outline white-outline" href="{{ url('/admin/users') }}">Manage Users</a>
+			</li>
+			<li class="pushy-link m-b-1">
+				<a class="btn btn-secondary-outline white-outline" href="{{ url('/admin/projects') }}">Project Permissions</a>
+			</li>
+			@endcan
 			<li class="pushy-link m-b-1">
 				<a class="btn btn-secondary-outline white-outline" href="{{ url('/logout') }}">Logout</a>
 			</li>

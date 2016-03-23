@@ -1,5 +1,7 @@
 <?php
 
+// TODO ADD ROLE PROTECTION IN CONTROLLERS
+
 // Web routes
 Route::group(['middleware' => ['web', 'force.ssl']], function () {
 	// Entry
@@ -19,13 +21,21 @@ Route::group(['middleware' => ['web', 'force.ssl']], function () {
 	Route::post('password/reset', 'Auth\PasswordController@postReset');
 });
 
-// Protected web routes
+// Web routes that require Auth
 Route::group(['middleware' => ['web', 'auth', 'force.ssl']], function () {
 	// Common
 	Route::resource('/projects', 'ProjectController', ['only' => ['index', 'show', 'store', 'edit', 'update', 'create']]);
 	Route::get('/builds/{buildId}', 'BuildController@show');
 	Route::get('/projects/{projectId}/builds/{buildId}', 'BuildController@nestedShow');
 	Route::get('/downloads/builds/{buildId}', 'InstallLinkController@getAwsBuild');
+});
+
+// Admin only routes
+Route::group(['middleware' => ['web', 'auth', 'force.ssl']], function () {
+	Route::get('/admin/users', 'AdminController@getUsers');
+	Route::get('/admin/projects', 'AdminController@getProjects');
+	Route::post('/admin/permissions/revoke', 'ProjectPermissionController@revokeAccess');
+	Route::post('/admin/permissions/grant', 'ProjectPermissionController@grantAccess');
 });
 
 // iOS doesn't hold session cookies for retrieving the plist

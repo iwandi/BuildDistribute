@@ -154,6 +154,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+		App\Providers\ViewServiceProvider::class,
 
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,		
 		Aws\Laravel\AwsServiceProvider::class,
@@ -206,6 +207,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
 		'AWS' => Aws\Laravel\AwsFacade::class,
+		'ViewServide' => App\Providers\ViewServiceProvider::class,
     ],
 
 ];

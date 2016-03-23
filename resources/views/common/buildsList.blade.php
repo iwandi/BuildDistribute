@@ -29,8 +29,7 @@
 		</div>
 	</div>
 	
-	<div class="container-fluid">
-		<br>
+	<div class="container-fluid p-t-1">
 		<div class="table-responsive">
 			<table id="buildsTable" class="table table-striped table-sm table-bordered">
 				<thead>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Gate;
 use Validator;
 use App\User;
 use App\Project;
@@ -14,12 +15,17 @@ class ProjectController extends Controller
 {	
 	public function index()
     {	
-		return view('partials.buildsList');
+		return view('common.buildsList');
     }
 
     public function show($id)
     {
 		$project = Project::findByIdOrName($id);
+		
+		if (Gate::denies('viewOneProject', $project->id)) {
+			abort(403);
+		}
+		
 		$builds = [];
 		
 		if ($project)
@@ -27,17 +33,17 @@ class ProjectController extends Controller
 			$builds = $project->builds()->orderBy('created_at', 'desc')->get();
 		}
 						
-		return view('partials.buildsList', compact('builds'));
+		return view('common.buildsList', compact('builds'));
     }
 	
 	public function create()
     {		
-		return view('partials.createProject');
+		return view('common.createProject');
     }
 	
 	public function edit()
     {		
-		return view('partials.editProject');
+		return view('common.editProject');
     }
 	
     public function store(Request $request)

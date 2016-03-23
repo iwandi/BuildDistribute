@@ -12,6 +12,6 @@ class HomeController extends Controller
 {
     public static function index(Guard $auth)
     {
-        return view('partials.buildsList');
+        return view('common.buildsList');
     }
 }

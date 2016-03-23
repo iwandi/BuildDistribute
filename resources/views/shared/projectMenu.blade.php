@@ -1,4 +1,5 @@
 @section('projectMenu')
+@can('manageAll')
 <a href="/projects/create">
 	<div class="card">
 		<div class="card-block">
@@ -6,6 +7,7 @@
 		</div>
 	</div>
 </a>
+@endcan
 <?php $allowedProjects = $commonData['allowedProjects']; ?>
 @if (isset($allowedProjects))
 	@foreach ($allowedProjects as $project)
