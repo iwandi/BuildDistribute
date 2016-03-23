@@ -31,18 +31,21 @@
 			<li>
 				<p>You are currently not signed in</p>
 			</li>
-			<li class="pushy-link">
+			<li class="pushy-link m-b-1">
 				<a class="btn btn-secondary-outline white-outline" role="button" href="{{ url('/login') }}">Login</a>
 			</li>
 			<br>
-			<li class="pushy-link">
+			<li class="pushy-link m-b-1">
 				<a class="btn btn-secondary-outline white-outline" role="button" href="{{ url('/register') }}">Register</a>
 			</li>
 			@else
 			<li>
 				<p>Logged in as {{Auth::user()->name}}</p>
 			</li>
-			<li class="pushy-link">
+			<li class="pushy-link m-b-1">
+				<a class="btn btn-secondary-outline white-outline" href="{{ url('/projects') }}">Projects</a>
+			</li>
+			<li class="pushy-link m-b-1">
 				<a class="btn btn-secondary-outline white-outline" href="{{ url('/logout') }}">Logout</a>
 			</li>
 			@endif
@@ -72,11 +75,15 @@
 			<div class="col-md-12 single-content">
 				@yield('content')
 			</div>
+			@elseif (!Auth::guest() && Request::is('admin/*'))
+			<div class="col-md-12 m-t-1">
+				@yield('mainView')
+			</div>
 			@else
 			<div class="col-md-4 projects-list side-nav">
 				@include('shared.projectMenu') @yield('projectMenu')
 			</div>
-			<div class="col-md-8 builds-view ">
+			<div class="col-md-8 main-view ">
 				@yield('mainView')
 			</div>
 		</div>

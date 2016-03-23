@@ -14,7 +14,7 @@ a:hover, a:visited, a:link, a:active {
 	padding-bottom: 15px;
 	padding-top: 1em;
 }
-.builds-view {
+.main-view {
 	background-color: #e8e8e8;
 	padding-top: 1em;
 }
@@ -33,7 +33,7 @@ a:hover, a:visited, a:link, a:active {
         overflow-x: hidden;
         padding-bottom: 40px;
     }
-	.builds-view {
+	.main-view {
         position: fixed;
         top: 54px;
 		width: 70%;

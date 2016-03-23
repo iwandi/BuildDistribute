@@ -1,24 +1,27 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
 // Web routes
 Route::group(['middleware' => ['web', 'force.ssl']], function () {
-    Route::auth();
-	Route::get('/', 'HomeController@index');
+	// Entry
+	Route::get('/', ['middleware' => 'auth', 'uses' => 'HomeController@index']);
+	
+	// Auth Routes
+	Route::get('/login', 'Auth\AuthController@getLogin');
+	Route::get('/logout', 'Auth\AuthController@logout');
+	Route::post('/login', 'Auth\AuthController@postLogin');
+	Route::get('/register', 'Auth\AuthController@getRegister');
+	Route::post('/register', 'Auth\AuthController@postRegister');
+	
+	// Password reset
+	Route::get('password/email', 'Auth\PasswordController@getEmail');
+	Route::post('password/email', 'Auth\PasswordController@postEmail');
+	Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+	Route::post('password/reset', 'Auth\PasswordController@postReset');
 });
 
-// Protected by role routes
-Route::group(['middleware' => ['web', 'role:admin', 'force.ssl']], function () {
+// Protected web routes
+Route::group(['middleware' => ['web', 'auth', 'force.ssl']], function () {
+	// Common
 	Route::resource('/projects', 'ProjectController', ['only' => ['index', 'show', 'store', 'edit', 'update', 'create']]);
 	Route::get('/builds/{buildId}', 'BuildController@show');
 	Route::get('/projects/{projectId}/builds/{buildId}', 'BuildController@nestedShow');
@@ -31,7 +34,8 @@ Route::group(['middleware' => ['force.ssl']], function () {
 	Route::get('/downloads/plist/{buildId}.plist', 'InstallLinkController@getAwsPlist');
 });
 
-// Disabled
+
+// API Auth Disabled
 /*
 // API Access routes
 Route::group(['prefix' => '/auth'], function () {

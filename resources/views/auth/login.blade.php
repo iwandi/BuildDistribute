@@ -26,7 +26,7 @@
 			<button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
 			<br>
 			<p class="text-xs-center">
-				<a class="text-muted" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
+				<a class="text-muted" href="{{ url('/password/email') }}">Forgot Your Password?</a>
 			</p>
 		</fieldset>
 	</form>

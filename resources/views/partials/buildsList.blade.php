@@ -1,34 +1,34 @@
 @extends('layouts.app') @section('mainView')
 <div class="card">
+	
 	<div class="card-header card-inverse card-primary">
-		
-		@if (isset($commonData['resourceInPath']))
-		<?php $projectInPath = $commonData['resourceInPath']; ?>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="btn-group p-l-1 pull-xs-right">
-						<label><a href="{{url('projects/'.$projectInPath->name.'/edit')}}" class="btn btn-secondary-outline btn-sm white-outline">Edit Project</a></label>
-					</div>
-					<div id="platformRadio" class="btn-group pull-xs-right" data-toggle="buttons">
-						<label class="btn btn-secondary-outline btn-sm white-outline active">
-							<input type="radio" name="options" id="all" autocomplete="off" checked>All</input>
-						</label>
-						<label class="btn btn-secondary-outline btn-sm white-outline">
-							<input type="radio" name="options" id="iphone" autocomplete="off">iOS</input>
-						</label>
-						<label class="btn btn-secondary-outline btn-sm white-outline">
-							<input type="radio" name="options" id="android" autocomplete="off">Android</input>
-						</label>
-					</div>
+		<div class="row">
+			<div class="col-md-12">
+				@if (isset($commonData['resourceInPath']))
+				<?php $projectInPath = $commonData['resourceInPath']; ?>
+				<div class="btn-group p-l-1 pull-xs-right">
+					<label><a href="{{url('projects/'.$projectInPath->name.'/edit')}}" class="btn btn-secondary-outline btn-sm white-outline">Edit Project</a></label>
 				</div>
+				<div id="platformRadio" class="btn-group pull-xs-right" data-toggle="buttons">
+					<label class="btn btn-secondary-outline btn-sm white-outline active">
+						<input type="radio" name="options" id="all" autocomplete="off" checked>All</input>
+					</label>
+					<label class="btn btn-secondary-outline btn-sm white-outline">
+						<input type="radio" name="options" id="iphone" autocomplete="off">iOS</input>
+					</label>
+					<label class="btn btn-secondary-outline btn-sm white-outline">
+						<input type="radio" name="options" id="android" autocomplete="off">Android</input>
+					</label>
+				</div>
+				@else
+				<div class="text-xs-center text-white">
+					<h5>Please select a project</h5>
+				</div>
+				@endif
 			</div>
-		@else
-			<div class="text-xs-left text-white">
-				<p>No Project selected</p>
-			</div>
-		@endif
-		
+		</div>
 	</div>
+	
 	<div class="container-fluid">
 		<br>
 		<div class="table-responsive">
