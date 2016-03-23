@@ -154,10 +154,9 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+		App\Providers\ViewServiceProvider::class,
 
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
-		Zizaco\Entrust\EntrustServiceProvider::class,
-		
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,		
 		Aws\Laravel\AwsServiceProvider::class,
 
     ],
@@ -207,9 +206,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-		'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 		'AWS' => Aws\Laravel\AwsFacade::class,
-		'AwsLinkService' => App\Helpers\AwsLinkService::class,
+		'ViewServide' => App\Providers\ViewServiceProvider::class,
     ],
 
 ];

@@ -36,6 +36,8 @@
 			<button type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
 		</fieldset>
 	</form>
-
+	<p class="text-xs-center">
+		<a class="text-muted" href="{{ url('/login') }}">Already have an account? Login here</a>
+	</p>
 </div>
 @endsection

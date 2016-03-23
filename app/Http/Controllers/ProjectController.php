@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Gate;
 use Validator;
 use App\User;
 use App\Project;
@@ -11,31 +12,38 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 
 class ProjectController extends Controller
-{
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
+{	
+	public function index()
+    {	
+		return view('common.buildsList');
     }
 
-    public function show(Request $request, Guard $auth)
+    public function show($id)
     {
-		$project = Project::findByIdOrName($request->projectId);
+		$project = Project::findByIdOrName($id);
+		
+		if (Gate::denies('viewOneProject', $project->id)) {
+			abort(403);
+		}
+		
+		$builds = [];
+		
 		if ($project)
 		{
 			$builds = $project->builds()->orderBy('created_at', 'desc')->get();
 		}
 						
-		return view('partials.builds', compact('builds'))->with('projects', Project::all());
+		return view('common.buildsList', compact('builds'));
     }
 	
 	public function create()
     {		
-		return view('partials.createProject')->with('projects', Project::all());
+		return view('common.createProject');
+    }
+	
+	public function edit()
+    {		
+		return view('common.editProject');
     }
 	
     public function store(Request $request)
@@ -56,7 +64,27 @@ class ProjectController extends Controller
 		$project = Project::create($request->all());
 	
 		return redirect()->intended('/');
-
+    }
+	
+	public function update(Request $request, $projectId)
+    {
 		
+		$input = $request->all();
+			
+		$validator = Validator::make($input, [
+			'name' => 'required|unique:projects',
+		]);
+		
+		if ($validator->fails()) {
+			return redirect()->back()
+				->withInput($request->all())
+				->withErrors($validator->errors());
+		}
+		
+		$project = Project::findByIdOrName($projectId);
+		
+		$project->update($request->only('name'));
+	
+		return redirect()->intended('/');
     }
 }

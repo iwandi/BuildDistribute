@@ -95,12 +95,7 @@ class ProjectController extends Controller
 			], $statusCode);
         }
 		
-		if ($request->header('Content-Type') == 'application/json')
-		{
-			return response()->json($project, 200);
-		}
-
-		return view('builds', ['$project' => $project]);
+		return response()->json($project, 200);
     }
 
     /**

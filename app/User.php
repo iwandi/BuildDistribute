@@ -2,13 +2,12 @@
 
 namespace App;
 
+use App\ProjectPermission;
+use App\Project;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
-{
-	use EntrustUserTrait;
-	
+{	
     protected $table = 'users';
     
     /**
@@ -26,7 +25,42 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'projects',
+        'password', 'remember_token', 'role',
     ];
 	
+	public function projectPermissions() {
+		return $this->hasMany('App\ProjectPermission');
+	}
+	
+	public function projects() {
+		$permissions = $this->projectPermissions;
+		
+		$projects = [];
+		
+		foreach ($permissions as $permission) {
+			$projects[] = $permission->project;
+		}
+		
+		return $projects;
+	}
+	
+	public function projectNames() {
+		$projects = $this->projects();
+		
+		$projectNames = [];
+		
+		foreach ($projects as $project) {
+			$projectNames[] = $project->name;
+		}
+		
+		return $projectNames;
+	}
+	
+	public function role() {
+		return $this->belongsTo('App\Role');
+	}
+	
+	public function isSuperAdmin() {
+		return $this->role->name === 'superAdmin';
+	}
 }

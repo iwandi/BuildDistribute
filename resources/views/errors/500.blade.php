@@ -44,7 +44,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Be right back.</div>
+                <div class="title">Something went wrong, please try again</div>
             </div>
         </div>
     </body>

@@ -87,17 +87,9 @@ class ProjectBuildController extends Controller
 						->orderBy('created_at', 'desc')
 						->first();
 				}
-				else {
-					// TODO: cleanup query with Laravel's query builder
-					// NOTE: it must return the head build for each platform in one json
-					// Get head for all platforms in one query
-					$head = DB::table(DB::raw("(SELECT sub.platform, MAX(sub.revision) AS head
-												FROM (SELECT * FROM builds WHERE project_id = ".$project->id.") sub
-												GROUP BY platform) as filtered
-												INNER JOIN builds temp ON temp.platform = filtered.platform
-												AND temp.revision = filtered.head;"))
-												->get();
-				}
+        else {
+          // TODO: get head for each platform
+        }
 				
 				return response()->json($head, 200);
 			}
