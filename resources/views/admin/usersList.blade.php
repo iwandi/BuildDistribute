@@ -21,6 +21,7 @@
 						<th class="text-xs-center">Name</th>
 						<th class="text-xs-center">Email</th>
 						<th class="text-xs-center">Role</th>
+						<th class="text-xs-center">Role Description</th>
 						<th class="text-xs-center">Projects</th>
 						<!--<th class="text-xs-center"></th>-->
 					</tr>
@@ -32,7 +33,8 @@
 						<td>{{$user->id or 'N/A'}}</td>
 						<td>{{$user->name or 'N/A'}}</td>
 						<td>{{$user->email or 'N/A'}}</td>
-						<td>{{$user->role->name or 'N/A'}}</td>
+						<td>{{$user ? $user->role->name : 'N/A'}}</td>
+						<td>{{$user ? $user->role->description : 'N/A'}}</td>
 						<td>{{implode (',', $user->projectNames())}}</td>
 						<!--<td><a href="{!!url('/admin/users/'.$user->id)!!}" disabled>Edit User</a></td>-->
 					</tr>

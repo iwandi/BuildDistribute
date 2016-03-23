@@ -30,7 +30,6 @@
 						<th class="text-xs-center">Email</th>
 						<th class="text-xs-center">Role</th>
 						<th class="text-xs-center">Role Description</th>
-						<th class="text-xs-center"></th>
 					</tr>
 				</thead>
 				<tbody class="text-xs-center">

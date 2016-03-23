@@ -30,7 +30,7 @@ class AdminController extends Controller
 		}
 		
 		$projects = Project::all();
-		
+				
         return view('admin.projectsList', compact('projects'));
     }
 }

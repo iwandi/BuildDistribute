@@ -20,9 +20,12 @@
 						<input type="radio" name="options" id="android" autocomplete="off">Android</input>
 					</label>
 				</div>
+				<div class="text-xs-left text-white">
+					<h5>Builds: {{count($projectInPath->builds)}}</h5>
+				</div>
 				@else
-				<div class="text-xs-center text-white">
-					<h5>Please select a project</h5>
+				<div class="text-xs-left text-white">
+					<h5>No project selected</h5>
 				</div>
 				@endif
 			</div>
