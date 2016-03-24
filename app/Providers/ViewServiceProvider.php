@@ -28,16 +28,16 @@ class ViewServiceProvider extends ServiceProvider
 	
 	public static function getAllowedProjects()
 	{
-		$user = Auth::user();
+		// $user = Auth::user();
 		
-		if ($user->hasRole('superAdmin') || $user->hasRole('wlpTeam')) {
-			$allowedProjects = Project::all();
-		}
-		else {
-			$allowedProjects = $user->projects();
-		}
+		// if ($user->hasRole('superAdmin') || $user->hasRole('wlpTeam')) {
+		// 	$allowedProjects = Project::all();
+		// }
+		// else {
+		// 	$allowedProjects = $user->projects();
+		// }
 		
-		return $allowedProjects;
+		// return $allowedProjects;
 	}
 	
 	public static function getAllUsers()

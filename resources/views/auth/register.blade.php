@@ -6,7 +6,7 @@
 
 			<label class="sr-only">Name</label>
 
-			<input type="name" class="form-control" name="name" value="{{ old('email') }}" placeholder="Your name"> @if ($errors->has('name'))
+			<input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Your name"> @if ($errors->has('name'))
 			<span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span> @endif

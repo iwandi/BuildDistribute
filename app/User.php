@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Ability;
 use App\ProjectPermission;
 use App\Project;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'role',
+        'password', 'remember_token',
     ];
 	
 	public function projectPermissions() {
@@ -56,14 +57,15 @@ class User extends Authenticatable
 		return $projectNames;
 	}
 	
-	public function role() {
-		return $this->belongsTo('App\Role');
+	public function abilities() {
+		return $this->hasMany('App\Ability');
 	}
 	
-	public function hasRole($roleName) {
-		if ($this->role) {
-			return $this->role->name === $roleName;
-		}
-		return false;
+	public function can($abilityName) {
+		$ability = Ability::where('name', '=', $abilityName)->first();
+		
+		$exists = Ability::where('user_id', '=', $userId)->where('ability_id', '=', $ability->id)->first();
+		
+		return $exists !== null;
 	}
 }
