@@ -1,7 +1,5 @@
 <?php
 
-// TODO ADD ROLE PROTECTION IN CONTROLLERS
-
 // Web routes
 Route::group(['middleware' => ['web', 'force.ssl']], function () {
 	// Entry
@@ -45,14 +43,11 @@ Route::group(['middleware' => ['force.ssl']], function () {
 });
 
 
-// API Auth Disabled
-/*
 // API Access routes
-Route::group(['prefix' => '/auth'], function () {
+Route::group(['prefix' => '/auth', 'middleware' => 'api.authorize'], function () {
 	Route::post('/authenticate', 'API\APIAuthController@authenticate');
 	Route::get('/me', 'API\APIAuthController@getAuthenticatedUser');
 });
-*/
 
 // RESTful API routes
 Route::group(['prefix' => '/api/v1', 'middleware' => 'api'], function () {
