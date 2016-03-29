@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role_id'
     ];
 
     /**
@@ -57,15 +57,24 @@ class User extends Authenticatable
 		return $projectNames;
 	}
 	
-	public function abilities() {
-		return $this->hasMany('App\Ability');
+	public function role() {
+		return $this->belongsTo('App\Role');
 	}
 	
-	public function can($abilityName) {
-		$ability = Ability::where('name', '=', $abilityName)->first();
+	public function hasRole($roleName) {
+		if (!$roleName) {
+			return false;
+		}
 		
-		$exists = Ability::where('user_id', '=', $userId)->where('ability_id', '=', $ability->id)->first();
+		$input = explode('|', $roleName);
+
+		foreach ($input as $key => $value) {
+			
+			if ($this->role->name === $value) {
+				return true;
+			}
+		}
 		
-		return $exists !== null;
+		return false;
 	}
 }

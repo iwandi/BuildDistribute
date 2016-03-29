@@ -27,7 +27,7 @@ class ProjectController extends Controller
 			abort(404);
 		}
 			
-		if (Gate::denies('viewOneProject', $project->id)) {
+		if (Gate::denies('viewProject', $project->id)) {
 			abort(403);
 		}
 				
@@ -38,7 +38,7 @@ class ProjectController extends Controller
 	
 	public function create()
     {
-		if (Gate::denies('modifyProjects')) {
+		if (Gate::denies('adminOnly')) {
 			abort(403);
 		}
 		
@@ -47,16 +47,12 @@ class ProjectController extends Controller
 	
 	public function edit()
     {
-		if (Gate::denies('modifyProjects')) {
-			abort(403);
-		}
-		
 		return view('common.editProject');
     }
 	
     public function store(Request $request)
     {
-		if (Gate::denies('modifyProjects')) {
+		if (Gate::denies('adminOnly')) {
 			abort(403);
 		}
 			
@@ -80,7 +76,13 @@ class ProjectController extends Controller
 	
 	public function update(Request $request, $projectId)
     {
-		if (Gate::denies('modifyProjects')) {
+		$project = Project::findByIdOrName($projectId);
+		
+		if (!$project) {
+			abort(404);
+		}
+		
+		if (Gate::denies('adminOnly', $project->id)) {
 			abort(403);
 		}
 		
@@ -96,7 +98,7 @@ class ProjectController extends Controller
 				->withErrors($validator->errors());
 		}
 		
-		$project = Project::findByIdOrName($projectId);
+		
 		
 		$project->update($request->only('name'));
 	

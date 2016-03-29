@@ -16,7 +16,6 @@
 				<label class>Grant access permission to a user: </label>
 				<div class="form-group">
 					<select class="form-control" name="userId">
-						<?php $users = ViewService::getAllUsers(); ?>
 						@if (isset($users) && count($users) > 0)
 						@foreach ($users as $key=>$user)
 						<option value="{{$user->id}}">{{strtoupper($user->name)}} | {{$user->email}}</option>

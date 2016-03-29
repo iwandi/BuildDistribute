@@ -19,7 +19,7 @@ class BuildController extends Controller
 			abort(404);
 		}
 		
-		if (Gate::denies('viewOneProject', $build->project->id)) {
+		if (Gate::denies('viewProject', $build->project->id)) {
 			abort(403);
 		}
 		
@@ -29,8 +29,8 @@ class BuildController extends Controller
 	public function nestedShow($projectId, $buildId)
 	{		
 		$build = Build::find($buildId);
-		
-		if (Gate::denies('viewOneProject', $build->project->id)) {
+				
+		if (Gate::denies('viewProject', $build->project->id)) {
 			abort(403);
 		}
     

@@ -39,8 +39,8 @@
 					<tr>
 						<td>{{$user ? $user->name : 'N/A'}}</td>
 						<td>{{$user ? $user->email : 'N/A'}}</td>
-						<td>{{$user ? $user->role->name : 'N/A'}}</td>
-						<td>{{$user ? $user->role->description : 'N/A'}}</td>
+						<td>-</td>
+						<td>-</td>
 					</tr>
 				@endforeach
 				@else

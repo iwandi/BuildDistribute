@@ -11,7 +11,7 @@ class ApiAuthorize
     {
 		$user = User::where('email','=',$request->only('email'))->first();
 		
-		if (!$user->can('apiAdmin')) {
+		if (!$user->hasRole('superAdmin')) {
 			return response()->json([
 				'error' => 'Unauthorized, the user with which you are trying to authenticate doesn\'t have the necessary rights to access this route'
 			], 401);

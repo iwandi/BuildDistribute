@@ -1,5 +1,5 @@
 @section('projectMenu')
-@can('manageAll')
+@can('adminOnly')
 <a href="/projects/create">
 	<div class="card">
 		<div class="card-block">

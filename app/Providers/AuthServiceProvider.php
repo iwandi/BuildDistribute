@@ -29,23 +29,24 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies($gate);
 		
 		$gate->before(function($user, $ability) {
-			if ($user->hasAbility('manageAll')) {
+			if ($user->hasRole('superAdmin')) {
 				return true;
 			}
 		});
 		
-		$gate->define('seeAllProjects', function($user, $projectId) {
-			if ($user->hasAbility('seeAllProjects')) {
+		$gate->define('viewAllProjects', function($user) {
+			$allowedRoles = ['wlpTeam'];
+			return $user->hasRole(implode("|", $allowedRoles));
+		});
+				
+		$gate->define('viewProject', function($user, $projectId) {
+			$bypassRoles = ['wlpTeam'];
+			
+			if ($user->hasRole(implode("|", $bypassRoles))) {
 				return true;
 			}
-		});
-		
-		$gate->define('seeOneProject', function($user, $projectId) {
+			
 			return ProjectPermission::checkForPermission($user->id, $projectId);
-		});
-		
-		$gate->define('manageAllProjects', function($user) {
-			return $user->hasAbility('manageAllProjects');
 		});
     }
 }

@@ -23,20 +23,28 @@
 						<th class="text-xs-center">Role</th>
 						<th class="text-xs-center">Role Description</th>
 						<th class="text-xs-center">Projects</th>
-						<!--<th class="text-xs-center"></th>-->
+						<th class="text-xs-center"></th>
 					</tr>
 				</thead>
 				<tbody class="text-xs-center">
 				@if (isset($users) && count($users) > 0)
 					@foreach ($users as $key=>$user)
 					<tr>
+						<?php
+							if ($user->hasRole('superAdmin|wlpTeam')) {
+								$projectNames = "All";
+							}
+							else {
+								$projectNames = implode(", ", $user->projectNames());
+							}
+						?>
 						<td>{{$user->id or 'N/A'}}</td>
 						<td>{{$user->name or 'N/A'}}</td>
 						<td>{{$user->email or 'N/A'}}</td>
-						<td>{{$user ? $user->role->name : 'N/A'}}</td>
-						<td>{{$user ? $user->role->description : 'N/A'}}</td>
-						<td>{{implode (',', $user->projectNames())}}</td>
-						<!--<td><a href="{!!url('/admin/users/'.$user->id)!!}" disabled>Edit User</a></td>-->
+						<td>{{$user->role->name or 'N/A'}}</td>
+						<td>{{$user->role->description or 'N/A'}}</td>
+						<td>{{$projectNames or 'N/A'}}</td>
+						<td><a href="{!!url('/admin/users/'.$user->id)!!}">Edit User</a></td>
 					</tr>
 					@endforeach
 				@else

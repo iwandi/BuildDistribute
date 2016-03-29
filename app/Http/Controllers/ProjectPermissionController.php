@@ -15,7 +15,7 @@ class ProjectPermissionController extends Controller
 {
     public static function revokeAccess(Request $request)
     {
-		if (Gate::denies('manageAll')) {
+		if (Gate::denies('adminOnly')) {
 			abort(403);
 		}
 		
@@ -28,12 +28,12 @@ class ProjectPermissionController extends Controller
 		
 		$result = ProjectPermission::where('user_id', '=', $user->id)->where('project_id', '=', $project->id)->delete();
 		
-        return redirect('/admin/projects');
+        return redirect()->back();
     }
 	
 	public static function grantAccess(Request $request)
     {
-		if (Gate::denies('manageAll')) {
+		if (Gate::denies('adminOnly')) {
 			abort(403);
 		}
 		
@@ -49,6 +49,6 @@ class ProjectPermissionController extends Controller
 			'project_id' => $project->id
 		]);
 		
-        return redirect('/admin/projects');
+        return redirect()->back();
     }
 }

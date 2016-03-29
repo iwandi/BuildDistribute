@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Gate;
 use Request;
 use Auth;
 use App\User;
@@ -28,29 +29,18 @@ class ViewServiceProvider extends ServiceProvider
 	
 	public static function getAllowedProjects()
 	{
-		// $user = Auth::user();
-		
-		// if ($user->hasRole('superAdmin') || $user->hasRole('wlpTeam')) {
-		// 	$allowedProjects = Project::all();
-		// }
-		// else {
-		// 	$allowedProjects = $user->projects();
-		// }
-		
-		// return $allowedProjects;
-	}
-	
-	public static function getAllUsers()
-	{
 		$user = Auth::user();
 		
-		$users = [];
+		$allowedProjects = [];
 		
-		if ($user->hasRole('superAdmin')) {
-			$users = User::all();
+		if (Gate::allows('viewAllProjects')) {
+			$allowedProjects = Project::all();
+		}
+		else {
+			$allowedProjects = $user->projects();
 		}
 		
-		return $users;
+		return $allowedProjects;
 	}
 
     public function register()
