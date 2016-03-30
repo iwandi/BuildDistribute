@@ -1,5 +1,8 @@
 <?php
 
+// WolperBot for HipChat
+Route::post('wolperbot/room/{roomId}/token/{roomToken}', 'WolperBotController@talk');
+
 // Web routes
 Route::group(['middleware' => ['web', 'force.ssl']], function () {
 	// Entry
@@ -52,16 +55,14 @@ Route::group(['prefix' => '/auth', 'middleware' => 'api.authorize'], function ()
 });
 
 // RESTful API routes
-Route::group(['prefix' => '/api/v1', 'middleware' => 'api'], function () {
+Route::group(['prefix' => '/api/v1', 'middleware' => ['api']], function () {
 	// Resources
-	Route::any('/bounce', 'API\DebugController@bounceRequest');
-	
 	Route::resource('/builds', 'API\BuildController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
     Route::resource('/projects', 'API\ProjectController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
 	Route::resource('/projects.builds', 'API\ProjectBuildController', ['only' => ['index', 'show']]);
 	Route::resource('/users', 'API\UserController', ['only' => ['index', 'show']]);
 	
 	// Additional relationships
-	Route::get('/projects/{projectId}/head', 'API\ProjectBuildController@indexHead');
+	// Route::get('/projects/{projectId}/head', 'API\ProjectBuildController@indexHead');
 	Route::get('/builds/{buildId}/project', 'API\BuildController@getProject');
 });

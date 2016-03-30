@@ -11,6 +11,27 @@ use Illuminate\Contracts\Auth\Guard;
 
 class InstallLinkController extends Controller
 {
+	public function generatePublicLinkForBuild($buildId) {
+		
+		$build = Build::find($buildId);
+
+		if (!$build) {
+			return null;
+			//throw new CustomException"Something went wrong, couln't generate link for that build number";
+		}
+		
+		if (preg_match("/^(ios|iphone)/", strtolower($build->platform))) {
+			// TODO solve for ios
+			return null;
+		}
+		else {
+			$link = AwsS3Service::getPresignedLink($build->installFolder, $build->installFileName);
+		}
+		
+		return $link;
+		
+	}
+	
 	public function getAwsPlist ($buildId)
 	{
 		$build = Build::find($buildId);
