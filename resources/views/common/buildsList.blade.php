@@ -59,7 +59,7 @@
 							@if ($buildPlatform == 'android')
 							<a href="{!!url('/downloads/builds/'.$build->id)!!}">Install</a>
 							@elseif ($buildPlatform == 'iphone')
-							<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'.plist')!!}">Install</a>
+							<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'/token/'.Hash::make(Config::get('app.key')))!!}">Install</a>
 							@endif
 						</td>
 					</tr>

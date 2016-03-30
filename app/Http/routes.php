@@ -31,6 +31,12 @@ Route::group(['middleware' => ['web', 'auth', 'force.ssl']], function () {
 	Route::get('/downloads/builds/{buildId}', 'InstallLinkController@getAwsBuild');
 });
 
+// iOS doesn't hold session cookies for retrieving the plist
+// TODO add url token verification
+Route::group(['middleware' => ['force.ssl']], function () {
+	Route::get('/downloads/plist/{buildId}/token/{token}', 'InstallLinkController@getAwsPlist');
+});
+
 // Admin only routes
 Route::group(['middleware' => ['web', 'auth', 'force.ssl']], function () {
 	Route::get('/admin/users', 'AdminController@indexUsers');
@@ -39,12 +45,6 @@ Route::group(['middleware' => ['web', 'auth', 'force.ssl']], function () {
 	// Route::get('/admin/projects', 'AdminController@getProjects');
 	Route::post('/admin/permissions/revoke', 'ProjectPermissionController@revokeAccess');
 	Route::post('/admin/permissions/grant', 'ProjectPermissionController@grantAccess');
-});
-
-// iOS doesn't hold session cookies for retrieving the plist
-// TODO add url token verification
-Route::group(['middleware' => ['force.ssl']], function () {
-	Route::get('/downloads/plist/{buildId}.plist', 'InstallLinkController@getAwsPlist');
 });
 
 

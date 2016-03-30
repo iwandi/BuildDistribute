@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Config;
+use Hash;
 use Response;
 use App\Helpers\AwsS3Service;
 use App\Build;
@@ -32,8 +34,14 @@ class InstallLinkController extends Controller
 		
 	}
 	
-	public function getAwsPlist ($buildId)
+	public function getAwsPlist (Request $request, $buildId, $token)
 	{
+		$valid = Hash::check(Config::get('app.key'), $token);
+		
+		if (!$valid) {
+			abort(403);
+		}
+		
 		$build = Build::find($buildId);
 		
 		if (!$build) {
