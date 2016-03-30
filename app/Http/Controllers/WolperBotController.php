@@ -21,7 +21,7 @@ class WolperBotController extends Controller
 			$data = $request->all();
 						
 			if (!$data) {
-				throw new CustomException("No request body provided", 200);
+				throw new CustomException("No request body provided", 400);
 			}
 		
 			$message = preg_split('/\s+/', $data['item']['message']['message']);
@@ -36,29 +36,27 @@ class WolperBotController extends Controller
 			}
 			
 			if (count($params) < 2) {
-				throw new CustomException("Hello there. \n\nNeed some help? Try '\\get help'", 200);
+				return $this->sendMessage($roomId, $roomToken, "Hello there.".
+																"<br><br>You can ask me for builds this way:".
+																"<br><i>'\\get  projectIdent  platform  buildId'</i>".
+																"<br><br>If you leave out the <i>buildId</i> I will get the head for that platform".
+																"<br><br>You can also ask me which projects exists, like this:".
+																"<br><i>'\\get projects'</i>"
+																);
 			}
 			
 			switch ($params[1]) {
-				case 'help':
-					// TODO: Rework this as method
-					throw new CustomException("You can ask me for builds this way:".
-											"\n'\\get  projectIdent  platform  buildId'".
-											"\n\nIf you leave out the buildId I will get the head for that platform"
-											, 200);
-					break;
-					
 				case 'projects':
 					$projects = Project::all();
 					
-					$projectInfo = ['I found this projects:'];
+					$projectInfo = ["I found these projects:"];
 					
 					foreach ($projects as $key => $project) {
-						$projectInfo[] = "Name: ".$project->name."  |  Ident: ".$project->ident;
+						$projectInfo[] = "&middot; Name: <i>".$project->name."</i>  |  Ident: <i>".$project->ident."</i>";
 					}
+										
+					return $this->sendMessage($roomId, $roomToken, implode("<br>",  $projectInfo));
 					
-					// TODO: Rework this as method
-					throw new CustomException(implode("\n", $projectInfo), 200);
 					break;
 					
 				default:
@@ -73,20 +71,19 @@ class WolperBotController extends Controller
 			$project = Project::where("ident", "=", $projectIdent)->first();
 			
 			if (!$project) {
-				// Exception needs to be 200 for hipchat to show the message on the chat
-				throw new CustomException("I couldn't find any project with that ident", 200);
+				return $this->sendMessage($roomId, $roomToken, "I couldn't find any project with that ident");
 			}
 			
 			if (!$platform) {
-				throw new CustomException("I can't guess for which platform you want me to get, tell me!", 200);
+				return $this->sendMessage($roomId, $roomToken, "I can't guess for which platform you want me to get, tell me!");
 			}
 
 			if (!preg_match("/^(ios|android|iphone)$/", strtolower($platform))) {
-				throw new CustomException("You need to be more clear for which platform you want me to get. \nI have builds for ios and android", 200);
+				return $this->sendMessage($roomId, $roomToken, "You need to be more clear for which platform you want me to get. have builds for <i>ios</i> and <i>android</i>");
 			}
 			
 			if (preg_match("/^(ios|iphone)/", strtolower($platform))) {
-				throw new CustomException("Oh snap that build is for iOS! I currently only support android builds...", 200);
+				return $this->sendMessage($roomId, $roomToken, "Oh snap that build is for iOS! At the moment I only support <i>android</i> builds... Hint: plists...");
 			}
 			
 			$installLinkController = new InstallLinkController();
@@ -95,7 +92,7 @@ class WolperBotController extends Controller
 				$build = Build::where('project_id', '=', $project->id)->where('platform', '=', strtolower($platform))->orderBy("created_at", 'desc')->first();
 				
 				if (!$build) {
-					throw new CustomException("Hm... I couldn't find any build for that project... ", 200);
+					return $this->sendMessage($roomId, $roomToken, "Hm... I couldn't find <i>any</i> build for that project... ");
 				}
 				
 				$buildId = $build->id;
@@ -104,19 +101,11 @@ class WolperBotController extends Controller
 			$link = $installLinkController->generatePublicLinkForBuild($buildId);
 			
 			if (!$link) {
-				throw new CustomException("Hm... I couldn't find that build... ", 200);
+				return $this->sendMessage($roomId, $roomToken, "Hm... I couldn't find that build... ");
 			}
 			
 			// If everything went well, post to chat room
-			$client = new Client;
-			$client->request('POST', 'https://wolpertingergames.hipchat.com/v2/room/'.$roomId.'/notification?auth_token='.$roomToken, [
-				"form_params" => [
-					"color" => "green",
-					"message" =>  $link,
-					"notify" => false,
-					"message_format" => "text"
-				]
-			]);
+			return $this->sendMessage($roomId, $roomToken, "<a href=".$link.">Install ".$project->name." Build #".$buildId."</a>");
 		}
 		catch (\Exception $e)
         {
@@ -131,5 +120,21 @@ class WolperBotController extends Controller
         }
 		
 		return response()->json(200);
+	}
+	
+	function SendMessage($roomId, $roomToken, $message) {
+		if (!$roomId || !$roomToken) {
+			return;
+		}
+		
+		$client = new Client;
+		$client->request('POST', 'https://wolpertingergames.hipchat.com/v2/room/'.$roomId.'/notification?auth_token='.$roomToken, [
+			"form_params" => [
+				"color" => "green",
+				"message" => $message,
+				"notify" => false,
+				"message_format" => "html"
+			]
+		]);
 	}
 }
