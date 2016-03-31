@@ -36,8 +36,10 @@ class InstallLinkController extends Controller
 	
 	public function getAwsPlist (Request $request, $buildId, $token)
 	{
-		$valid = Hash::check(Config::get('app.key'), $token);
-		
+		$urldecoded = str_replace("+", "/", $token);
+		$urldecoded = str_replace("-", "\\", $urldecoded);
+		$valid = Hash::check(Config::get('app.key'), $urldecoded);
+				
 		if (!$valid) {
 			abort(403);
 		}

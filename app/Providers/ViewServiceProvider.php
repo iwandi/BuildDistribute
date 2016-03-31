@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Config;
+use Hash;
 use Gate;
 use Request;
 use Auth;
@@ -41,6 +43,14 @@ class ViewServiceProvider extends ServiceProvider
 		}
 		
 		return $allowedProjects;
+	}
+	
+	public static function generateUrlSafeToken()
+	{
+		$token = Hash::make(Config::get('app.key'));
+		$urlencoded = str_replace("/", "+", $token);
+		$urlencoded = str_replace("\\", "-", $urlencoded);
+		return $urlencoded;
 	}
 
     public function register()

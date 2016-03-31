@@ -11,7 +11,7 @@
 							Install
 						</a>
 						@elseif (strtolower($build->platform) == 'iphone')
-						<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'/token/'.Hash::make(Config::get('app.key')))!!}"  class="btn btn-secondary-outline btn-sm white-outline">
+						<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'/token/'.ViewService::generateUrlSafeToken())!!}"  class="btn btn-secondary-outline btn-sm white-outline">
 							Install
 						</a>
 						@endif
