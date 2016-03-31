@@ -26,7 +26,6 @@ class ProjectPermission extends Model
 	
 	public static function checkForPermission($userId, $projectId)
 	{
-		// TODO use belongsTo projects helper: "user->projects->where*
 		$exists = ProjectPermission::where('user_id', '=', $userId)->where('project_id', '=', $projectId)->first();
 		return $exists !== null;
 	}
