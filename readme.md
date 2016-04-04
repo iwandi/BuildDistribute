@@ -1,6 +1,6 @@
 # Wolpertinger Build Distribution
 
-iOS/Android build distribution service and web client for Wolpertinger
+iOS/Android build distribution service and web client at Wolpertinger.  
 Live at: <https://builds.wolpertingergames.com>
 
 **Main use case:**  
