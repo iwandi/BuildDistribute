@@ -4,10 +4,9 @@
 	<div class="card-header card-inverse card-primary">
 		<div class="row">
 			<div class="col-md-12">
-				<?php $projectInPath = ViewService::getResourceInPath(); ?>
-				@if (isset($projectInPath))
+				@if (isset($project))
 				<div class="btn-group p-l-1 pull-xs-right">
-					<label><a href="{{url('projects/'.$projectInPath->name.'/edit')}}" class="btn btn-secondary-outline btn-sm white-outline">Edit Project</a></label>
+					<label><a href="{{url('projects/'.$project->name.'/edit')}}" class="btn btn-secondary-outline btn-sm white-outline">Edit Project</a></label>
 				</div>
 				<div id="platformRadio" class="btn-group pull-xs-right" data-toggle="buttons">
 					<label class="btn btn-secondary-outline btn-sm white-outline active">
@@ -21,7 +20,7 @@
 					</label>
 				</div>
 				<div class="text-xs-left text-white">
-					<h5>Builds: {{count($projectInPath->builds)}}</h5>
+					<h5>Builds: {{count($project->builds)}}</h5>
 				</div>
 				@else
 				<div class="text-xs-left text-white">

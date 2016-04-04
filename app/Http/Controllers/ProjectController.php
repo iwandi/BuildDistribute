@@ -33,7 +33,7 @@ class ProjectController extends Controller
 				
 		$builds = $project->builds()->orderBy('created_at', 'desc')->get();
 						
-		return view('common.buildsList', compact('builds'));
+		return view('common.buildsList', compact('project', 'builds'));
     }
 	
 	public function create()
@@ -45,9 +45,16 @@ class ProjectController extends Controller
 		return view('common.createProject');
     }
 	
-	public function edit()
+	public function edit(Request $request)
     {
-		return view('common.editProject');
+		$projectId = urldecode(explode('/', $request->path())[1]);
+		$project = Project::findByIdOrName($projectId);
+		
+		if (!$project) {
+			abort(404);
+		}
+		
+		return view('common.editProject', compact('project'));
     }
 	
     public function store(Request $request)
