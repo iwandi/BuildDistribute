@@ -23,7 +23,6 @@ class User extends Authenticatable
 		return $this->hasMany('App\ProjectPermission');
 	}
 	
-	// TODO use map reduce here too?
 	public function projects() {
 		$permissions = $this->projectPermissions;
 		
@@ -32,19 +31,13 @@ class User extends Authenticatable
 		foreach ($permissions as $permission) {
 			$projects[] = $permission->project;
 		}
-		
 		return $projects;
 	}
 	
-	// TODO use map reduce?
 	public function projectNames() {
 		$projects = $this->projects();
 		
-		$projectNames = [];
-		
-		foreach ($projects as $project) {
-			$projectNames[] = $project->name;
-		}
+		$projectNames = array_map(function($project) { return $project->name; }, $projects);
 		
 		return $projectNames;
 	}
