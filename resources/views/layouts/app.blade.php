@@ -89,20 +89,20 @@
 		</ul>
 	</div>
 
-	<div>
+	<div >
 	@if (Auth::guest())
 		<div class="col-md-12 single-content">
 			@yield('content')
 		</div>
-		@elseif (!Auth::guest() && Request::is('admin/*'))
+	@elseif (!Auth::guest() && Request::is('admin/*'))
 		<div class="col-md-12">
 			@yield('mainView')
 		</div>
-		@else
-		<div class="col-md-4">
+	@else
+		<div class="col-md-4 m-b-1">
 			@include('shared.projectMenu') @yield('projectMenu')
 		</div>
-		<div class="col-md-8 main-view">
+		<div class="col-md-8">
 			@yield('mainView')
 		</div>
 	@endif
