@@ -1,4 +1,5 @@
 body {
+	margin-top: 1em;
 	font-family: 'Droid Sans';
 	background: #dedede;
 
@@ -8,43 +9,13 @@ a:hover, a:visited, a:link, a:active {
     text-decoration: none;
 }
 
-/* Side Navigation */
-.side-nav {
-	background-color: #f0f0f0;
-	padding-bottom: 15px;
-	padding-top: 1em;
-}
 .main-view {
-	background-color: #e8e8e8;
 	padding-top: 1em;
 }
 
 @media(min-width:768px) {
-    .side-nav {
-        position: fixed;
-        top: 118px;
-        left: 0px;
-        width: 30%;
-        border: none;
-        border-radius: 0;
-		overflow-y: auto; /* has to be scroll, not auto */
-  		-webkit-overflow-scrolling: touch;
-        bottom: 0;
-        overflow-x: hidden;
-        padding-bottom: 40px;
-    }
 	.main-view {
-        position: fixed;
-        top: 118px;
-		width: 70%;
-		right: 0px;
-        border: none;
-        border-radius: 0;
-		overflow-y: auto;
-  		-webkit-overflow-scrolling: touch;
-        bottom: 0;
-        overflow-x: hidden;
-        padding-bottom: 40px;
+        padding-top: 0em;
 	}
 }
 
@@ -120,20 +91,32 @@ a:hover, a:visited, a:link, a:active {
 	color: #0275D8;
 }
 
-.no-border {
-	-webkit-border-radius: 0px;
-	-moz-border-radius: 0px;
-	border-radius: 0px;
+.no-border-top {
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	-webkit-border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-moz-border-top-left-radius: 0px;
+	-moz-border-top-right-radius: 0px;
+}
+
+.no-border-bottom {
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	-moz-border-bottom-left-radius: 0px;
+	-moz-border-bottom-right-radius: 0px;
 }
 
 .soft-shadow {
-	-webkit-box-shadow: 0px 5px 16px 0px rgba(181,181,181,0.6);
-	-moz-box-shadow: 0px 5px 16px 0px rgba(181,181,181,0.6);
-	box-shadow: 0px 5px 16px 0px rgba(181,181,181,0.6);
+-webkit-box-shadow: 0px 4px 6px 0px rgba(214,214,214,1);
+-moz-box-shadow: 0px 4px 6px 0px rgba(214,214,214,1);
+box-shadow: 0px 4px 6px 0px rgba(214,214,214,1);
 }
 
 .soft-shadow-xs {
--webkit-box-shadow: 0px 3px 8px 0px rgba(181,181,181,0.6);
--moz-box-shadow: 0px 3px 8px 0px rgba(181,181,181,0.6);
-box-shadow: 0px 3px 8px 0px rgba(181,181,181,0.6);
+-webkit-box-shadow: 0px 4px 6px 0px rgba(214,214,214,1);
+-moz-box-shadow: 0px 4px 6px 0px rgba(214,214,214,1);
+box-shadow: 0px 4px 6px 0px rgba(214,214,214,1);
 }

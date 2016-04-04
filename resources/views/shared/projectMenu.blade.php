@@ -1,32 +1,28 @@
 @section('projectMenu')
-@can('adminOnly')
-<a href="/projects/create">
-	<div class="card soft-shadow-xs">
-		<div class="card-block">
-			<h5 class="card-title"><i class="fa fa-plus"></i> Create project</h5>
-		</div>
-	</div>
-</a>
-@endcan
-<?php $allowedProjects = ViewService::getAllowedProjects(); ?>
-@if (isset($allowedProjects) && count($allowedProjects) > 0)
-	@foreach ($allowedProjects as $project)
-		<a href="/projects/{{$project->name}}">
-			<div class="soft-shadow-xs card {{Request::is('projects/'.$project->name.'*') || Request::is('projects/'.$project->id.'/*') ? 'card-inverse card-primary' : ''}}">
-				<div class="card-block">
-					<h5 class="card-title">
-						<span class="label label-pill label-default ">{{$project->builds()->count()}}</span>
-						{{$project->name or 'Unkown Project'}}
-					</h5>
-				</div>
-			</div>
+
+<ul class="list-group soft-shadow">
+	<li class="list-group-item bg-inverse">
+		<h5 class="text-xs-left">Projects</h5>
+	</li>
+	@can('adminOnly')
+	<a href="{{url('/projects/create')}}" class="list-group-item">
+		<i class="fa fa-plus"></i> Create project
+	</a>
+	@endcan
+	
+	<?php $allowedProjects = ViewService::getAllowedProjects(); ?>
+	@if (isset($allowedProjects) && count($allowedProjects) > 0)
+		@foreach ($allowedProjects as $project)
+		<a href="{{url('/projects/'.$project->name)}}" class="list-group-item {{Request::is('projects/'.$project->name.'*') || Request::is('projects/'.$project->id.'/*') ? 'active' : ''}}">
+			<span class="label label-default label-pill pull-xs-right">{{$project->builds()->count()}}</span>
+			{{$project->name or 'Unkown Project'}}
 		</a>
-	@endforeach
-@else
-	<div class="card card-inverse card-warning">
-		<div class="card-block">
-			<h5>No projects assigned</h5>
-		</div>
-	</div>
-@endif
+		@endforeach
+	@else
+	<li class="list-group-item">
+		No Projects assigned...
+	</li>
+	@endif
+</ul>
+
 @endsection

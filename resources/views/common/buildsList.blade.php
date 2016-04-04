@@ -1,40 +1,32 @@
 @extends('layouts.app') @section('mainView')
+@if (isset($project))
 <div class="card soft-shadow">
-	
-	<div class="card-header card-inverse card-primary">
+	<div class="card-header card-inverse bg-inverse">
 		<div class="row">
 			<div class="col-md-12">
-				@if (isset($project))
 				<div class="btn-group p-l-1 pull-xs-right">
-					<label><a href="{{url('projects/'.$project->name.'/edit')}}" class="btn btn-secondary-outline btn-sm white-outline">Edit Project</a></label>
+					<label><a href="{{url('projects/'.$project->name.'/edit')}}" class="btn btn-primary btn-sm">Edit Project</a></label>
 				</div>
 				<div id="platformRadio" class="btn-group pull-xs-right" data-toggle="buttons">
-					<label class="btn btn-secondary-outline btn-sm white-outline active">
+					<label class="btn btn-primary btn-sm  active">
 						<input type="radio" name="options" id="all" autocomplete="off" checked>All</input>
 					</label>
-					<label class="btn btn-secondary-outline btn-sm white-outline">
+					<label class="btn btn-primary btn-sm ">
 						<input type="radio" name="options" id="iphone" autocomplete="off">iOS</input>
 					</label>
-					<label class="btn btn-secondary-outline btn-sm white-outline">
+					<label class="btn btn-primary btn-sm ">
 						<input type="radio" name="options" id="android" autocomplete="off">Android</input>
 					</label>
 				</div>
-				<div class="text-xs-left text-white">
-					<h5>Builds: {{count($project->builds)}}</h5>
-				</div>
-				@else
-				<div class="text-xs-left text-white">
-					<h5>No project selected</h5>
-				</div>
-				@endif
-			</div>
-		</div>
+				<h5 class="text-xs-left">Builds</h5>
+			</div>			
+		</div>	
 	</div>
-	
+
 	<div class="container-fluid p-t-1">
 		<div class="table-responsive">
 			<table id="buildsTable" class="table table-striped table-sm table-bordered">
-				<thead>
+				<thead class="thead-default">
 					<tr>
 						<th class="text-xs-center">#</th>
 						<th class="text-xs-center">Revision</th>
@@ -56,9 +48,9 @@
 						<td><a href="{{url('/builds/'.$build->id)}}">Details</a></td>
 						<td>
 							@if ($buildPlatform == 'android')
-							<a href="{!!url('/downloads/builds/'.$build->id)!!}">Install</a>
+							<a class="btn btn-success btn-sm" href="{!!url('/downloads/builds/'.$build->id)!!}">Install</a>
 							@elseif ($buildPlatform == 'iphone')
-							<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'/token/'.ViewService::generateUrlSafeToken())!!}">Install</a>
+							<a class="btn btn-success btn-sm" href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'/token/'.ViewService::generateUrlSafeToken())!!}">Install</a>
 							@endif
 						</td>
 					</tr>
@@ -77,4 +69,10 @@
 		</div>
 	</div>
 </div>
+@else
+<div class="alert alert-warning" role="alert">
+	<h5><strong>Hint:</strong></h5>
+	 If you don't see any projects in the selection menu, most likely you haven't been authorized yet. If you think is is a mistake please contact us.
+</div>
+@endif
 @endsection

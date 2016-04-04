@@ -1,17 +1,19 @@
 @extends('layouts.app') @section('mainView')
 @if (isset($build) && count($build) > 0)
 	<div class="card soft-shadow">
-		<div class="card-header text-white card-inverse card-primary">
+		<div class="card-header text-white bg-inverse">
 			<div class="row">
 				<div class="col-md-12">
 					<label><h5>Build # {{$build->buildNumber}}</h5></label>
 					<div class="btn-group pull-xs-right">
 						@if (strtolower($build->platform) == 'android')
-						<a href="{!!url('/downloads/builds/'.$build->id)!!}" class="btn btn-secondary-outline btn-sm white-outline">
+						<a href="{!!url('/downloads/builds/'.$build->id)!!}"
+							class="btn btn-success btn-sm">
 							Install
 						</a>
 						@elseif (strtolower($build->platform) == 'iphone')
-						<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'/token/'.ViewService::generateUrlSafeToken())!!}"  class="btn btn-secondary-outline btn-sm white-outline">
+						<a href="itms-services://?action=download-manifest&url={!!url('/downloads/plist/'.$build->id.'/token/'.ViewService::generateUrlSafeToken())!!}" 
+							class="btn btn-success btn-sm">
 							Install
 						</a>
 						@endif

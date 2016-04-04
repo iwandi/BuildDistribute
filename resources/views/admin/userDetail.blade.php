@@ -2,13 +2,13 @@
 @if (isset($user))
 @include('shared.editRoleModal') @yield('editRoleModal')
 <div class="card soft-shadow">
-	<div class="card-header text-white card-inverse card-primary">
+	<div class="card-header text-white bg-inverse">
 		<div class="row">
 			<div class="col-md-12">
 				<label><h5>User Administration:</h5></label>
 				<label class="m-l-1"><h6>Name: {{$user->name or 'N/A'}} | E-mail: {{$user->email or 'N/A'}} | Role: {{$user->role->name}}</h6></label>
 				<div class="btn-group pull-xs-right">
-					<a class="btn btn-secondary-outline btn-sm white-outline"  data-toggle="modal" data-target="#editRoleModal">
+					<a class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#editRoleModal">
 						Edit Role
 					</a>
 				</div>
@@ -16,9 +16,43 @@
 		</div>
 	</div>
 	<div class="container-fluid p-t-1">
+		<h5 class>User details:</h5>
+		<div class="table-responsive">
+			<table id="userTable" class="table table-sm table-bordered">
+				<thead class="thead-default">
+					<tr>
+						<th class="text-xs-center">ID</th>
+						<th class="text-xs-center">Name</th>
+						<th class="text-xs-center">Email</th>
+						<th class="text-xs-center">Role</th>
+						<th class="text-xs-center">Role Description</th>
+					</tr>
+				</thead>
+				<tbody class="text-xs-center">
+					<tr>
+						<?php
+							if ($user->hasRole('superAdmin|wlpTeam')) {
+								$projectNames = "All";
+							}
+							else {
+								$projectNames = implode(", ", $user->projectNames());
+							}
+						?>
+						<td>{{$user->id or 'N/A'}}</td>
+						<td>{{$user->name or 'N/A'}}</td>
+						<td>{{$user->email or 'N/A'}}</td>
+						<td>{{$user->role->name or 'N/A'}}</td>
+						<td>{{$user->role->description or 'N/A'}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="container-fluid p-t-1">
+		<h5 class>Project permissions:</h5>
 		<div class="table-responsive">
 			<table id="projectsTable" class="table table-sm table-bordered">
-				<thead>
+				<thead class="thead-default">
 					<tr>
 						<th class="text-xs-center">ID</th>
 						<th class="text-xs-center">Name</th>
@@ -27,7 +61,7 @@
 					</tr>
 				</thead>
 				<tbody class="text-xs-center">
-					
+				
 				@if (isset($projects) && count($projects) > 0)
 				<?php $projectsWithAccess = array_map(function($x) {return $x->id;}, $user->projects()); ?>
 				

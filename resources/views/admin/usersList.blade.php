@@ -1,6 +1,6 @@
 @extends('layouts.app') @section('mainView')
 <div class="card soft-shadow">
-	<div class="card-header text-white card-inverse card-primary">
+	<div class="card-header text-white bg-inverse">
 		<div class="row">
 			<div class="col-md-12">
 				<label><h5>User Administration</h5></label>
@@ -15,13 +15,13 @@
 	<div class="container-fluid p-t-1">
 		<div class="table-responsive">
 			<table id="usersTable" class="table table-striped table-sm table-bordered">
-				<thead>
+				<thead class="thead-default">
 					<tr>
 						<th class="text-xs-center">ID</th>
 						<th class="text-xs-center">Name</th>
 						<th class="text-xs-center">Email</th>
 						<th class="text-xs-center">Role</th>
-						<th class="text-xs-center">Role Description</th>
+						<!--<th class="text-xs-center">Role Description</th>-->
 						<th class="text-xs-center">Projects</th>
 						<th class="text-xs-center"></th>
 					</tr>
@@ -42,7 +42,7 @@
 						<td>{{$user->name or 'N/A'}}</td>
 						<td>{{$user->email or 'N/A'}}</td>
 						<td>{{$user->role->name or 'N/A'}}</td>
-						<td>{{$user->role->description or 'N/A'}}</td>
+						<!--<td>{{$user->role->description or 'N/A'}}</td>-->
 						<td>{{$projectNames or 'N/A'}}</td>
 						<td><a href="{!!url('/admin/users/'.$user->id)!!}">Edit User</a></td>
 					</tr>
