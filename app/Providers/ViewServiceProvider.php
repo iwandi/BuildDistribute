@@ -14,6 +14,13 @@ use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
 {	
+	public static function getPathNamedResources()
+	{
+		$pathElements = array_filter(explode('/', Request::path()));
+		$resources = array_map(function($x) {return urldecode($x); }, $pathElements );
+		return $resources;
+	}
+	
 	public static function getAllowedProjects()
 	{
 		$user = Auth::user();

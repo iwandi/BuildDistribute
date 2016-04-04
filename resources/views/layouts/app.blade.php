@@ -64,22 +64,32 @@
 	<div class="site-overlay"></div>
 
 	<!-- Your Content -->
-	<div id="container-fluid">
-
-		<nav class="navbar navbar-light bg-faded">
-			<div class="nav navbar-nav pull-xs-left">
-				<a class="navbar-brand" href="/">
-					<span class="hidden-xs-down"><strong>Wolpertinger Games</strong> | </span>
-					Build Distribution
-				</a>
-			</div>
-			<a class="btn active pushy-enable-btn pull-xs-right">&#9776; Menu</a>
-		</nav>
+	<div>
+		<div class="row p-x-1">
+			<nav class="navbar navbar-light bg-faded navbar-full">
+				<div class="nav navbar-nav pull-xs-left">
+					<a class="navbar-brand" href="/">
+						<span class="hidden-xs-down"><strong>Wolpertinger Games</strong> | </span>
+						Build Distribution
+					</a>
+				</div>
+				<a class="btn active pushy-enable-btn pull-xs-right">&#9776; Menu</a>
+			</nav>
+		</div>
+		<div class="row p-x-1">
+		<ol class="breadcrumb" >
+			<li><a href="{{url('/')}}">Home</a></li>
+			<?php $namedResources = ViewService::getPathNamedResources(); ?>
+			@foreach ($namedResources as $index => $resourceName)
+			<li><a href="{{url(implode('/', array_slice($namedResources, 0, $index + 1)))}}">{{ucfirst( $resourceName )}}</a></li>
+			@endforeach
+		</ol>
+		</div>
 	</div>
 
 	<div class="container-fluid ">
 		<div class="row">
-			@if (Auth::guest())
+		@if (Auth::guest())
 			<div class="col-md-12 single-content">
 				@yield('content')
 			</div>
@@ -94,8 +104,8 @@
 			<div class="col-md-8 main-view ">
 				@yield('mainView')
 			</div>
-		</div>
 		@endif
+		</div>
 	</div>
 
 

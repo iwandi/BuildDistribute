@@ -13,7 +13,11 @@ use Illuminate\Contracts\Auth\Guard;
 
 class AdminController extends Controller
 {
-    public static function indexUsers()
+	public function index() {
+		return redirect('/admin/users');
+	}
+	
+    public function indexUsers()
     {
 		if (Gate::denies('adminOnly')) {
 			abort(403);
@@ -24,7 +28,7 @@ class AdminController extends Controller
         return view('admin.usersList', compact('users'));
     }
 	
-	public static function showUser($userId)
+	public function showUser($userId)
     {
 		if (Gate::denies('adminOnly')) {
 			abort(403);
