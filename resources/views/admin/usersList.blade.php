@@ -1,14 +1,9 @@
 @extends('layouts.app') @section('mainView')
 <div class="card soft-shadow">
-	<div class="card-header text-white bg-inverse">
+	<div class="card-header text-white bg-primary">
 		<div class="row">
 			<div class="col-md-12">
-				<label><h5>User Administration</h5></label>
-				<!--<div class="btn-group pull-xs-right">
-					<a href="{!!url('/admin/roles')!!}"  class="btn btn-secondary-outline btn-sm white-outline">
-						Edit Roles
-					</a>
-				</div>-->
+				<label><h5>User Management</h5></label>
 			</div>
 		</div>
 	</div>

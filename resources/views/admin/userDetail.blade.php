@@ -2,16 +2,10 @@
 @if (isset($user))
 @include('shared.editRoleModal') @yield('editRoleModal')
 <div class="card soft-shadow">
-	<div class="card-header text-white bg-inverse">
+	<div class="card-header text-white bg-primary">
 		<div class="row">
 			<div class="col-md-12">
-				<label><h5>User Administration:</h5></label>
-				<label class="m-l-1"><h6>Name: {{$user->name or 'N/A'}} | E-mail: {{$user->email or 'N/A'}} | Role: {{$user->role->name}}</h6></label>
-				<div class="btn-group pull-xs-right">
-					<a class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#editRoleModal">
-						Edit Role
-					</a>
-				</div>
+				<label><h5>User Management</h5></label>
 			</div>
 		</div>
 	</div>
@@ -26,6 +20,7 @@
 						<th class="text-xs-center">Email</th>
 						<th class="text-xs-center">Role</th>
 						<th class="text-xs-center">Role Description</th>
+						<th class="text-xs-center">-</th>
 					</tr>
 				</thead>
 				<tbody class="text-xs-center">
@@ -43,6 +38,7 @@
 						<td>{{$user->email or 'N/A'}}</td>
 						<td>{{$user->role->name or 'N/A'}}</td>
 						<td>{{$user->role->description or 'N/A'}}</td>
+						<td><a class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#editRoleModal">Edit Role</a></td>
 					</tr>
 				</tbody>
 			</table>

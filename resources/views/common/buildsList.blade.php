@@ -1,20 +1,20 @@
 @extends('layouts.app') @section('mainView')
 @if (isset($project))
 <div class="card soft-shadow">
-	<div class="card-header card-inverse bg-inverse">
+	<div class="card-header card-inverse bg-primary">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="btn-group p-l-1 pull-xs-right">
-					<label><a href="{{url('projects/'.$project->name.'/edit')}}" class="btn btn-primary btn-sm">Edit Project</a></label>
+					<label><a href="{{url('projects/'.$project->name.'/edit')}}" class="btn btn-secondary-outline btn-sm white-outline">Edit Project</a></label>
 				</div>
 				<div id="platformRadio" class="btn-group pull-xs-right" data-toggle="buttons">
-					<label class="btn btn-primary btn-sm  active">
+					<label class="btn btn-secondary-outline btn-sm white-outline active">
 						<input type="radio" name="options" id="all" autocomplete="off" checked>All</input>
 					</label>
-					<label class="btn btn-primary btn-sm ">
+					<label class="btn btn-secondary-outline btn-sm white-outline ">
 						<input type="radio" name="options" id="iphone" autocomplete="off">iOS</input>
 					</label>
-					<label class="btn btn-primary btn-sm ">
+					<label class="btn btn-secondary-outline btn-sm white-outline ">
 						<input type="radio" name="options" id="android" autocomplete="off">Android</input>
 					</label>
 				</div>

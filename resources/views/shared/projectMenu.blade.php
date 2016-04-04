@@ -1,7 +1,7 @@
 @section('projectMenu')
 
 <ul class="list-group soft-shadow">
-	<li class="list-group-item bg-inverse">
+	<li class="list-group-item bg-primary">
 		<h5 class="text-xs-left">Projects</h5>
 	</li>
 	@can('adminOnly')
