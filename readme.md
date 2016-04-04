@@ -10,7 +10,7 @@ Live at: <https://builds.wolpertingergames.com>
 
 ## API Reference
 ### Authentication
-Only users with the role of *superAdmin* have access to the back-end API. To generate a JWT you must post your email and password as a JSON to:
+Only users with the role of *superAdmin* have access to the back-end API. To generate a JWT you must post the user's email and password as a JSON to:
 ```
 /auth/authenticate
 ```
@@ -87,7 +87,7 @@ Users should only register via the web client as there is currently no use-case 
 ```
 
 ### DB seed
-For security reasons no DB seed is provided. A sample seed:
+For security reasons no DB seed is provided. A sample seed:  
 **Users**
 ```
 DB::table('users')->insert([
