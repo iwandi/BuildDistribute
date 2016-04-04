@@ -1,7 +1,7 @@
 @extends('layouts.app') @section('mainView')
 @if (isset($build) && count($build) > 0)
 	<div class="card soft-shadow">
-		<div class="card-header text-white bg-inverse">
+		<div class="card-header text-white bg-primary">
 			<div class="row">
 				<div class="col-md-12">
 					<label><h5>Build # {{$build->buildNumber}}</h5></label>
