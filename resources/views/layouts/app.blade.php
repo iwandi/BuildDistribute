@@ -77,13 +77,17 @@
 			</nav>
 		</div>
 		<div class="row p-x-1">
-			<ol class="breadcrumb no-border soft-shadow">
+			<ul class="breadcrumb no-border soft-shadow">
 				<li><a href="{{url('/')}}">Home</a></li>
 				<?php $namedResources = ViewService::getPathNamedResources(); ?>
 				@foreach ($namedResources as $index => $resourceName)
-				<li><a href="{{url(implode('/', array_slice($namedResources, 0, $index + 1)))}}" >{{ucfirst( $resourceName )}}</a></li>
+					@if ($index === count($namedResources) -1)
+					<li class="active">{{ucfirst( $resourceName )}}</li>
+					@else
+					<li><a href="{{url(implode('/', array_slice($namedResources, 0, $index + 1)))}}">{{ucfirst( $resourceName )}}</a></li>
+					@endif
 				@endforeach
-			</ol>
+			</ul>
 		</div>
 	</div>
 
