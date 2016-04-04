@@ -13,7 +13,7 @@
 	<?php $allowedProjects = ViewService::getAllowedProjects(); ?>
 	@if (isset($allowedProjects) && count($allowedProjects) > 0)
 		@foreach ($allowedProjects as $project)
-		<a href="{{url('/projects/'.$project->name)}}" class="list-group-item {{Request::is('projects/'.$project->name.'*') || Request::is('projects/'.$project->id.'/*') ? 'bg-success' : ''}}">
+		<a href="{{url('/projects/'.$project->name)}}" class="list-group-item {{Request::is('projects/'.$project->name.'*') || Request::is('projects/'.$project->id.'/*') ? 'active-inverse' : ''}}">
 			<span class="label label-default label-pill pull-xs-right">{{$project->builds()->count()}}</span>
 			{{$project->name or 'Unkown Project'}}
 		</a>
