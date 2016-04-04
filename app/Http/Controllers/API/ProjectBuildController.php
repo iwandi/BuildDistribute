@@ -70,4 +70,33 @@ class ProjectBuildController extends Controller
 			], $statusCode);
         }
 	}
+	
+	// TODO change default query to return head for each platform, no need to specify
+	public function indexHead(Request $request, $projectId)
+	{
+		// Query String
+		$platform = $request->input('platform');
+		$project = Project::findByIdOrName($projectId);
+		$builds = $project->builds();
+		
+		try {
+			if (!$platform) {
+				throw new CustomException("Please provide a head platform as a query string", 400);
+			}
+			
+			$builds = $builds->where('platform', $platform);
+			$builds = $builds->orderBy('revision', 'desc');
+			$builds = $builds->first();
+			
+			return response()->json($builds, 200);
+			
+		}
+		catch (\Exception $e) {
+			$statusCode = $e instanceof CustomException ? $e->getCode() : 500;
+			
+            return response()->json([
+				'errors' => ['message' => $e->getMessage()]
+			], $statusCode);
+		}
+	}
 }

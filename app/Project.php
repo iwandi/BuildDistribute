@@ -8,11 +8,6 @@ class Project extends Model
 {
     protected $table = 'projects';
 
-    /**
-    * The attributes that are mass assignable.
-    *
-    * @var array
-    */
     protected $fillable = [
         'name',
 		'ident'

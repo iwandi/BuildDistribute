@@ -37,7 +37,6 @@ class AdminController extends Controller
         return view('admin.userDetail', compact('projects', 'user', 'roles'));
     }
 	
-	// TODO move this to its own controller
 	public function updateUserRole(Request $request, $userId) {
 		$roleId = $request->only('roleId');
 		

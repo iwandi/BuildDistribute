@@ -1,8 +1,5 @@
 <?php
 
-// WolperBot for HipChat
-Route::post('wolperbot/room/{roomId}/token/{roomToken}', 'WolperBotController@talk');
-
 // Web routes
 Route::group(['middleware' => ['web', 'force.ssl']], function () {
 	// Entry
@@ -24,7 +21,6 @@ Route::group(['middleware' => ['web', 'force.ssl']], function () {
 
 // Web routes that require Auth
 Route::group(['middleware' => ['web', 'auth', 'force.ssl']], function () {
-	// Common
 	Route::resource('/projects', 'ProjectController', ['only' => ['index', 'show', 'store', 'edit', 'update', 'create']]);
 	Route::get('/builds/{buildId}', 'BuildController@show');
 	Route::get('/projects/{projectId}/builds/{buildId}', 'BuildController@nestedShow');
@@ -32,8 +28,8 @@ Route::group(['middleware' => ['web', 'auth', 'force.ssl']], function () {
 });
 
 // iOS doesn't hold session cookies for retrieving the plist
-// TODO add url token verification
 Route::group(['middleware' => ['force.ssl']], function () {
+	// Route cannot contain query string, token must be a nested route
 	Route::get('/downloads/plist/{buildId}/token/{token}', 'InstallLinkController@getAwsPlist');
 });
 
@@ -42,11 +38,9 @@ Route::group(['middleware' => ['web', 'auth', 'force.ssl']], function () {
 	Route::get('/admin/users', 'AdminController@indexUsers');
 	Route::get('/admin/users/{userId}', 'AdminController@showUser');
 	Route::post('/admin/users/{userId}/role', 'AdminController@updateUserRole');
-	// Route::get('/admin/projects', 'AdminController@getProjects');
 	Route::post('/admin/permissions/revoke', 'ProjectPermissionController@revokeAccess');
 	Route::post('/admin/permissions/grant', 'ProjectPermissionController@grantAccess');
 });
-
 
 // API Access routes
 Route::group(['prefix' => '/auth', 'middleware' => 'api.authorize'], function () {
@@ -63,6 +57,6 @@ Route::group(['prefix' => '/api/v1', 'middleware' => ['api']], function () {
 	Route::resource('/users', 'API\UserController', ['only' => ['index', 'show']]);
 	
 	// Additional relationships
-	// Route::get('/projects/{projectId}/head', 'API\ProjectBuildController@indexHead');
+	Route::get('/projects/{projectId}/head', 'API\ProjectBuildController@indexHead');
 	Route::get('/builds/{buildId}/project', 'API\BuildController@getProject');
 });

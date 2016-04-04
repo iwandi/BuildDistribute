@@ -11,20 +11,10 @@ class User extends Authenticatable
 {	
     protected $table = 'users';
     
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name', 'email', 'password', 'role_id'
     ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -33,6 +23,7 @@ class User extends Authenticatable
 		return $this->hasMany('App\ProjectPermission');
 	}
 	
+	// TODO use map reduce here too?
 	public function projects() {
 		$permissions = $this->projectPermissions;
 		
@@ -45,6 +36,7 @@ class User extends Authenticatable
 		return $projects;
 	}
 	
+	// TODO use map reduce?
 	public function projectNames() {
 		$projects = $this->projects();
 		
