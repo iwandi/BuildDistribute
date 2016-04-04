@@ -66,7 +66,7 @@
 	<!-- Your Content -->
 	<div>
 		<div class="row p-x-1">
-			<nav class="navbar navbar-light bg-faded navbar-full">
+			<nav class="navbar navbar-light bg-faded no-border">
 				<div class="nav navbar-nav pull-xs-left">
 					<a class="navbar-brand" href="/">
 						<span class="hidden-xs-down"><strong>Wolpertinger Games</strong> | </span>
@@ -77,13 +77,13 @@
 			</nav>
 		</div>
 		<div class="row p-x-1">
-		<ol class="breadcrumb" >
-			<li><a href="{{url('/')}}">Home</a></li>
-			<?php $namedResources = ViewService::getPathNamedResources(); ?>
-			@foreach ($namedResources as $index => $resourceName)
-			<li><a href="{{url(implode('/', array_slice($namedResources, 0, $index + 1)))}}">{{ucfirst( $resourceName )}}</a></li>
-			@endforeach
-		</ol>
+			<ol class="breadcrumb no-border soft-shadow">
+				<li><a href="{{url('/')}}">Home</a></li>
+				<?php $namedResources = ViewService::getPathNamedResources(); ?>
+				@foreach ($namedResources as $index => $resourceName)
+				<li><a href="{{url(implode('/', array_slice($namedResources, 0, $index + 1)))}}" >{{ucfirst( $resourceName )}}</a></li>
+				@endforeach
+			</ol>
 		</div>
 	</div>
 

@@ -2,7 +2,7 @@
 @if (isset($project))
 <div class="container">
 	
-	<form class="form-signin" method="POST" action="{{ url('/projects/'.$project->name) }}">
+	<form class="form-signin soft-shadow" method="POST" action="{{ url('/projects/'.$project->name) }}">
 		@cannot('adminOnly')
 		<div class="alert alert-warning">
 			<p class="text-muted text-xs-center">You are not authorized to edit this project.</p>

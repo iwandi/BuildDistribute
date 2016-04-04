@@ -1,5 +1,5 @@
 @extends('layouts.app') @section('mainView')
-<div class="card">
+<div class="card soft-shadow">
 	
 	<div class="card-header card-inverse card-primary">
 		<div class="row">

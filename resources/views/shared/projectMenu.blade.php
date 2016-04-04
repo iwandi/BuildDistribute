@@ -1,7 +1,7 @@
 @section('projectMenu')
 @can('adminOnly')
 <a href="/projects/create">
-	<div class="card">
+	<div class="card soft-shadow-xs">
 		<div class="card-block">
 			<h5 class="card-title"><i class="fa fa-plus"></i> Create project</h5>
 		</div>
@@ -12,7 +12,7 @@
 @if (isset($allowedProjects) && count($allowedProjects) > 0)
 	@foreach ($allowedProjects as $project)
 		<a href="/projects/{{$project->name}}">
-			<div class="card {{Request::is('projects/'.$project->name.'*') || Request::is('projects/'.$project->id.'/*') ? 'card-inverse card-primary' : ''}}">
+			<div class="soft-shadow-xs card {{Request::is('projects/'.$project->name.'*') || Request::is('projects/'.$project->id.'/*') ? 'card-inverse card-primary' : ''}}">
 				<div class="card-block">
 					<h5 class="card-title">
 						<span class="label label-pill label-default ">{{$project->builds()->count()}}</span>

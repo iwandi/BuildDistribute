@@ -1,6 +1,6 @@
 @extends('layouts.app') @section('mainView')
 <div class="container">
-	<form class="form-signin" method="POST" action="{{ url('/projects/') }}">
+	<form class="form-signin soft-shadow" method="POST" action="{{ url('/projects/') }}">
 		{!! csrf_field() !!}
 		<fieldset class="form-group">
 
