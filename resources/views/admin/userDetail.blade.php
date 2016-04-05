@@ -1,11 +1,15 @@
 @extends('layouts.app') @section('mainView')
 @if (isset($user))
 @include('shared.editRoleModal') @yield('editRoleModal')
+@include('shared.deleteUserModal') @yield('deleteUserModal')
 <div class="card soft-shadow">
 	<div class="card-header text-white bg-primary">
 		<div class="row">
 			<div class="col-md-12">
 				<label><h5>User Management</h5></label>
+				@if(!$user->hasRole('superAdmin'))
+				<div class="btn btn-danger btn-sm pull-xs-right" data-toggle="modal" data-target="#deleteUserModal">Delete Permanently</div>
+				@endif
 			</div>
 		</div>
 	</div>
@@ -38,7 +42,7 @@
 						<td>{{$user->email or 'N/A'}}</td>
 						<td>{{$user->role->name or 'N/A'}}</td>
 						<td>{{$user->role->description or 'N/A'}}</td>
-						<td><a class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#editRoleModal">Edit Role</a></td>
+						<td><a class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#editRoleModal">Edit Role</a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -53,7 +57,7 @@
 						<th class="text-xs-center">ID</th>
 						<th class="text-xs-center">Name</th>
 						<th class="text-xs-center">Ident</th>
-						<th class="text-xs-center"></th>
+						<th class="text-xs-center">-</th>
 					</tr>
 				</thead>
 				<tbody class="text-xs-center">

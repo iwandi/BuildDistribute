@@ -35,10 +35,11 @@ Route::group(['middleware' => ['force.ssl']], function () {
 
 // Admin only routes
 Route::group(['middleware' => ['web', 'auth', 'force.ssl']], function () {
-	Route::get('/admin', 'AdminController@index');
-	Route::get('/admin/users', 'AdminController@indexUsers');
-	Route::get('/admin/users/{userId}', 'AdminController@showUser');
-	Route::post('/admin/users/{userId}/role', 'AdminController@updateUserRole');
+	Route::get('/admin', 'UserAdminController@index');
+	Route::get('/admin/users', 'UserAdminController@indexUsers');
+	Route::get('/admin/users/{userId}', 'UserAdminController@showUser');
+	Route::post('/admin/users/{userId}/role', 'UserAdminController@updateUserRole');
+	Route::delete('/admin/users/{userId}', 'UserAdminController@destroyUser');
 	Route::post('/admin/permissions/revoke', 'ProjectPermissionController@revokeAccess');
 	Route::post('/admin/permissions/grant', 'ProjectPermissionController@grantAccess');
 });

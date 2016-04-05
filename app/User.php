@@ -62,4 +62,9 @@ class User extends Authenticatable
 		
 		return false;
 	}
+	
+	public function deleteAndCascade() {
+		$this->projectPermissions()->delete();
+		$this->delete();
+	}
 }
