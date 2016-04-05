@@ -1,12 +1,12 @@
 @extends('layouts.app') @section('content')
 <div class="container">
-	<form class="form-signin" method="POST" action="{{ url('/register') }}">
+	<form class="form-signin soft-shadow" method="POST" action="{{ url('/register') }}">
 		{!! csrf_field() !!}
 		<fieldset class="form-group">
 
 			<label class="sr-only">Name</label>
 
-			<input type="name" class="form-control" name="name" value="{{ old('email') }}" placeholder="Your name"> @if ($errors->has('name'))
+			<input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Your name"> @if ($errors->has('name'))
 			<span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span> @endif
@@ -36,6 +36,8 @@
 			<button type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
 		</fieldset>
 	</form>
-
+	<p class="text-xs-center">
+		<a class="text-muted" href="{{ url('/login') }}">Already have an account? Login here</a>
+	</p>
 </div>
 @endsection

@@ -8,11 +8,6 @@ class Project extends Model
 {
     protected $table = 'projects';
 
-    /**
-    * The attributes that are mass assignable.
-    *
-    * @var array
-    */
     protected $fillable = [
         'name',
 		'ident'
@@ -37,4 +32,20 @@ class Project extends Model
     {
         return $this->hasMany('App\Build');
     }
+	
+	public function projectPermissions() {
+		return $this->hasMany('App\ProjectPermission');
+	}
+	
+	public function users() {
+		$permissions = $this->projectPermissions;
+		
+		$users = [];
+		
+		foreach ($permissions as $permission) {
+			$users[] = $permission->user;
+		}
+		
+		return $users;
+	}
 }

@@ -14,7 +14,7 @@ class BuildController extends Controller
 {
     public function index(Request $request)
     {
-		// Optional route query parameters
+		// Optional route query string
 		$platform = $request->input('platform');
 		$orderBy = $request->input('orderBy');
 		$orderType = $request->input('orderType');
@@ -82,7 +82,7 @@ class BuildController extends Controller
             $build = Build::find($id);
 			
 			if (!$build) {
-				throw new CustomException("Provided build id not found",404);
+				throw new CustomException("Provided build id not found", 404);
 			}
 			
 			return response()->json($build, 200);

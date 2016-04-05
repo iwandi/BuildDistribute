@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\User;
 use App\Project;
 use App\Http\Requests;
@@ -10,24 +11,11 @@ use Illuminate\Contracts\Auth\Guard;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public static function index(Request $request, Guard $auth)
     {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public static function index(Guard $auth)
-    {
-		$projects = Project::all();
-        return view('index', compact('projects'));
+		if (!Auth::guest()) {
+			return redirect('/projects');
+		}
+        return view('common.buildsList');
     }
 }

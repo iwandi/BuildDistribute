@@ -1,6 +1,6 @@
 @extends('layouts.app') @section('content')
 <div class="container">
-	<form class="form-signin" method="POST" action="{{ url('/login') }}">
+	<form class="form-signin soft-shadow" method="POST" action="{{ url('/login') }}">
 		{!! csrf_field() !!}
 		<fieldset class="form-group">
 
@@ -25,9 +25,13 @@
 
 			<button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
 			<br>
-			<p class="text-xs-center"><a class="text-muted" href="{{ url('/password/reset') }}">Forgot Your Password?</a></p>
+			<!--<p class="text-xs-center">
+				<a class="text-muted" href="{{ url('/password/email') }}">Forgot Your Password?</a>
+			</p>-->
 		</fieldset>
 	</form>
-
+	<p class="text-xs-center">
+		<a class="text-muted" href="{{ url('/register') }}">Not registered yet? Sign up here</a>
+	</p>
 </div>
 @endsection

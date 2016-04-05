@@ -2,31 +2,64 @@
 
 namespace App;
 
+use App\Ability;
+use App\ProjectPermission;
+use App\Project;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
-{
-	use EntrustUserTrait;
-	
+{	
     protected $table = 'users';
     
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role_id'
     ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     protected $hidden = [
-        'password', 'remember_token', 'projects',
+        'password', 'remember_token',
     ];
 	
+	public function projectPermissions() {
+		return $this->hasMany('App\ProjectPermission');
+	}
+	
+	public function projects() {
+		$permissions = $this->projectPermissions;
+		
+		$projects = [];
+		
+		foreach ($permissions as $permission) {
+			$projects[] = $permission->project;
+		}
+		return $projects;
+	}
+	
+	public function projectNames() {
+		$projects = $this->projects();
+		
+		$projectNames = array_map(function($project) { return $project->name; }, $projects);
+		
+		return $projectNames;
+	}
+	
+	public function role() {
+		return $this->belongsTo('App\Role');
+	}
+	
+	public function hasRole($roleName) {
+		if (!$roleName) {
+			return false;
+		}
+		
+		$input = explode('|', $roleName);
+
+		foreach ($input as $key => $value) {
+			
+			if ($this->role->name === $value) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }
